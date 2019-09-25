@@ -1,0 +1,41 @@
+{
+  "name": "Metric",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "fileName": {
+      "type": "string",
+      "unique": true,
+      "required": true
+    },
+    "status": {
+      "type": "string",
+      "required": true
+    },
+    "started": {
+      "type": "date",
+      "required": true
+    },
+    "finished": {
+      "type": "date",
+      "default": null
+    },
+    "message": {
+      "type": "string",
+      "default": null
+    }
+  },
+  "validations": [],
+  "relations": {
+    "segments": {
+      "type": "hasMany",
+      "model": "Segment",
+      "foreignKey": "metricId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

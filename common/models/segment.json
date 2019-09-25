@@ -1,0 +1,28 @@
+{
+  "name": "Segment",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "segmentId": {
+      "type": "number",
+      "required": true
+    },
+    "metricId": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "uniques": {
+      "type": "hasMany",
+      "model": "Unique",
+      "foreignKey": "segmentId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

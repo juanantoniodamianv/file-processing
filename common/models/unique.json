@@ -1,0 +1,27 @@
+{
+  "name": "Unique",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "country": {
+      "type": "string",
+      "required": true
+    },
+    "count": {
+      "type": "number",
+      "default": 1,
+      "required": true
+    },
+    "segmentId": {
+      "type": "number",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}
