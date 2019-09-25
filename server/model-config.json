@@ -14,7 +14,17 @@
     ]
   },
   "User": {
-    "dataSource": "mongodb"
+    "dataSource": "mongodb",
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "login": true,
+          "logout": true,
+          "create": true
+        }
+      }
+    }
   },
   "AccessToken": {
     "dataSource": "mongodb",
@@ -49,6 +59,26 @@
   },
   "Customer": {
     "dataSource": "mongodb",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "find": true
+        }
+      }
+    }
+  },
+  "Storage": {
+    "dataSource": "storage",
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "upload": true
+        }
+      }
+    }
   }
 }

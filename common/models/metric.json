@@ -8,8 +8,8 @@
   "properties": {
     "fileName": {
       "type": "string",
-      "unique": true,
-      "required": true
+      "required": true,
+      "unique": true
     },
     "status": {
       "type": "string",
