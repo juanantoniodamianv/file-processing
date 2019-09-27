@@ -4,6 +4,8 @@
 >```mkdir storage``` 
 - Install dependencies: 
 >```npm install```
+- Run Redis
+>```redis-server```
 - Run nodemon: 
 >```npm run dev```
 
