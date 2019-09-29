@@ -47,15 +47,24 @@
   },
   "Metric": {
     "dataSource": "mongodb",
-    "public": true
+    "public": true,
+    "options": {
+      "remoting": {
+        "sharedMethods": {
+          "*": false,
+          "find": true,
+          "getFiles": true
+        }
+      }
+    }
   },
   "Segment": {
     "dataSource": "mongodb",
-    "public": true
+    "public": false
   },
   "Unique": {
     "dataSource": "mongodb",
-    "public": true
+    "public": false
   },
   "Customer": {
     "dataSource": "mongodb",
