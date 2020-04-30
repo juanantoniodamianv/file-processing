@@ -53,7 +53,8 @@
         "sharedMethods": {
           "*": false,
           "find": true,
-          "getFiles": true
+          "getFiles": true,
+          "spreadsheets": true
         }
       }
     }

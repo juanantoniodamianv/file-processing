@@ -2,7 +2,6 @@
 //const processFile = require('../../server/lib/processFile');
 const fs = require('fs');
 const path = require('path');
-
 module.exports = function(Metric) {
 
   /* Metric.checkFileMetric = (fileName, cb) => {
@@ -14,6 +13,14 @@ module.exports = function(Metric) {
     accepts: { arg: 'fileName', type: 'string' },
     returns: { arg: 'isValid', type: 'string' }
   }); */
+
+  Metric.spreadsheets = (cb) => {
+    cb(null)
+  }
+
+  Metric.remoteMethod('spreadsheets', {
+    returns: { arg: 'response', type: 'string' }
+  })
 
   Metric.getFiles = async (humanreadable, cb) => {
     let fileNames = await getFileName(humanreadable);
