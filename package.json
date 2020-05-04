@@ -7,7 +7,7 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "start": "node .",
+    "start": "mkdir storage && mkdir storage/customers && mkdir storage/tsv_files && node .",
     "dev": "nodemon .",
     "posttest": "npm run lint"
   },
