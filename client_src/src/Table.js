@@ -78,7 +78,8 @@ export class Table extends Component {
 
     getRegisters = async () => {
       try {
-        let items = await axios.get('http://localhost:3000/api/Spreadsheets')
+        let port = process.env.PORT || 3000
+        let items = await axios.get(`http://localhost:${port}/api/Spreadsheets`)
         this.setState({ 
           isLoaded: true,
           items: items.data.response
