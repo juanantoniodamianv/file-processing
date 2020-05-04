@@ -79,7 +79,7 @@ export class Table extends Component {
     getRegisters = async () => {
       try {
         //let port = process.env.PORT || 3000
-        let items = await axios.get(`http://localhost:${process.env.PORT}/api/Spreadsheets`)
+        let items = await axios.get("https://pre-consultation-forms.herokuapp.com/api/Spreadsheets")
         this.setState({ 
           isLoaded: true,
           items: items.data.response
