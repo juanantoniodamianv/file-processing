@@ -94,5 +94,9 @@
   "Spreadsheet": {
     "dataSource": null,
     "public": true
+  },
+  "PatientForm": {
+    "dataSource": "mongodb",
+    "public": true
   }
 }

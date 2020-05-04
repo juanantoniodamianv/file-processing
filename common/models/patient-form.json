@@ -1,0 +1,187 @@
+{
+  "name": "PatientForm",
+  "plural": "PatientForms",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "marcaTemporal": {
+      "type": "string",
+      "required": true
+    },
+    "apellidoYNombre": {
+      "type": "string",
+      "required": true
+    },
+    "fecha": {
+      "type": "string"
+    },
+    "medicoAnestesista": {
+      "type": "string",
+      "required": true
+    },
+    "cuitMedicoAnestesista": {
+      "type": "string",
+      "required": true
+    },
+    "obraSocial": {
+      "type": "string",
+      "required": true,
+      "default": "numeroAfiliado"
+    },
+    "numeroAfiliado": {
+      "type": "string",
+      "required": true
+    },
+    "insuficienciaCardiaca": {
+      "type": "boolean"
+    },
+    "arritmias": {
+      "type": "boolean"
+    },
+    "hipertension": {
+      "type": "boolean"
+    },
+    "hipotension": {
+      "type": "boolean"
+    },
+    "tos": {
+      "type": "boolean"
+    },
+    "expectoracion": {
+      "type": "boolean"
+    },
+    "asma": {
+      "type": "boolean"
+    },
+    "hepatopatia": {
+      "type": "boolean"
+    },
+    "coagulopatia": {
+      "type": "boolean"
+    },
+    "hipertiroidismo": {
+      "type": "boolean"
+    },
+    "hipotiroidismo": {
+      "type": "boolean"
+    },
+    "nefropatia": {
+      "type": "boolean"
+    },
+    "convulsiones": {
+      "type": "boolean"
+    },
+    "hipertermia": {
+      "type": "boolean"
+    },
+    "epoc": {
+      "type": "boolean"
+    },
+    "fuma": {
+      "type": "boolean"
+    },
+    "alcohol": {
+      "type": "boolean"
+    },
+    "drogas": {
+      "type": "boolean"
+    },
+    "alergias": {
+      "type": "boolean"
+    },
+    "anemia": {
+      "type": "boolean"
+    },
+    "diabetes": {
+      "type": "boolean"
+    },
+    "glaucoma": {
+      "type": "boolean"
+    },
+    "desnutrido": {
+      "type": "boolean"
+    },
+    "deshidratado": {
+      "type": "boolean"
+    },
+    "distendido": {
+      "type": "boolean"
+    },
+    "obnubilado": {
+      "type": "boolean"
+    },
+    "especificaciones": {
+      "type": "string"
+    },
+    "diureticos": {
+      "type": "boolean"
+    },
+    "digtalicos": {
+      "type": "boolean"
+    },
+    "betaBloqueantes": {
+      "type": "boolean"
+    },
+    "antihipertensivos": {
+      "type": "boolean"
+    },
+    "antihistaminicos": {
+      "type": "boolean"
+    },
+    "corticoides": {
+      "type": "boolean"
+    },
+    "insulina": {
+      "type": "boolean"
+    },
+    "hipotensores": {
+      "type": "boolean"
+    },
+    "anticoagulantes": {
+      "type": "boolean"
+    },
+    "antibioticos": {
+      "type": "boolean"
+    },
+    "ansioliticos": {
+      "type": "boolean"
+    },
+    "hipoglucemiantes": {
+      "type": "boolean"
+    },
+    "anticonvulcionantes": {
+      "type": "boolean"
+    },
+    "cirugiasAnteriores": {
+      "type": "string"
+    },
+    "observaciones": {
+      "type": "string"
+    },
+    "medicamentoYDosis": {
+      "type": "string"
+    },
+    "aperturaBoca": {
+      "type": "string"
+    },
+    "piezasDentarias": {
+      "type": "string"
+    },
+    "protesisInferiorSuperior": {
+      "type": "string"
+    },
+    "maxilares": {
+      "type": "string"
+    },
+    "fauces": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {},
+  "acls": [],
+  "methods": {}
+}

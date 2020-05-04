@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 const $ = require('jquery');
-$.DataTable = require('datatables.net');
+$.DataTable = require('datatables.net-responsive');
 
 const columns = [
   { 
@@ -27,10 +27,6 @@ const columns = [
   }
 ];
 
-/* const data = [
-  [ "Tiger Nixon", "System Architect", "Edinburgh", "5421", "2011/04/25", "$320,800", "Juasna" ],
-  [ "Garrett Winters", "Accountant", "Tokyo", "8422", "2011/07/25", "$170,750", "Juasna" ]
-] */
 export class Table extends Component { 
   
   /* constructor(props) {
@@ -65,12 +61,18 @@ export class Table extends Component {
       [marca_temporal, apellido_y_nombre, numero_de_documento, fecha, medico_anestesista, obra_social, numero_de_afiliado]
     )
     this.$el = $(this.el)
-    console.log(this.$el);
     this.$el.DataTable({
-      dom: '<"data-table-wrapper"t>',
+      searchPanes:{
+        cascadePanes: true
+      },
+      dom: '<"data-table-wrapper"ft>',
       data,
       columns,
-      ordering: false
+      ordering: false,
+      responsive: true,
+      language: {
+        search: 'Buscar'
+      }
     })
   }
 
@@ -96,7 +98,7 @@ export class Table extends Component {
       } else if (!isLoaded) {
         return <div>Cargando...</div>;
       } else {
-        return <table className="display table table-striped table-bordered" ref={ el => this.el= el }></table>;
+        return <table className="table table-striped table-bordered dt-responsive nowrap" style={{width:'100%'}} ref={ el => this.el= el }></table>;
       }
     }
 }
