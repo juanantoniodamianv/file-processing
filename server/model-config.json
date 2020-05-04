@@ -90,5 +90,9 @@
         }
       }
     }
+  },
+  "Spreadsheet": {
+    "dataSource": null,
+    "public": true
   }
 }

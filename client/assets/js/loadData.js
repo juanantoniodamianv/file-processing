@@ -2,13 +2,48 @@
 
 //const spreadsheet = require('../../../server/lib/spreadsheetsParser')
 const columns = [
-  { title: 'Marca temporal'},
-  { title: 'Apellido y Nombre'},
-  { title: 'Número de Documento'},
-  { title: 'Fecha'},
-  { title: 'Médico Anestesista'},
-  { title: 'Obra Social'},
-  { title: 'Número de Afiliado'},
+  { 
+    label: 'Marca temporal',
+    field: '',
+    sort: 'asc',
+    width: 150
+  },
+  { 
+    label: 'Apellido y Nombre',
+    field: '',
+    sort: 'asc',
+    width: 150
+  },
+  { 
+    label: 'Número de Documento',
+    field: '',
+    sort: 'asc',
+    width: 150
+  },
+  { 
+    label: 'Fecha',
+    field: '',
+    sort: 'asc',
+    width: 150
+  },
+  { 
+    label: 'Médico Anestesista',
+    field: '',
+    sort: 'asc',
+    width: 150
+  },
+  { 
+    label: 'Obra Social',
+    field: '',
+    sort: 'asc',
+    width: 150
+  },
+  { 
+    label: 'Número de Afiliado',
+    field: '',
+    sort: 'asc',
+    width: 150
+  },
   { title: '[Insuf. Cardíaca]'},
   { title: '[Arritmias]'},
   { title: '[Hipertensión]'},
@@ -66,3 +101,4 @@ $(document).ready(function() {
     columns: columns
   })
 })
+

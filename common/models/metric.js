@@ -14,14 +14,6 @@ module.exports = function(Metric) {
     returns: { arg: 'isValid', type: 'string' }
   }); */
 
-  Metric.spreadsheets = (cb) => {
-    cb(null)
-  }
-
-  Metric.remoteMethod('spreadsheets', {
-    returns: { arg: 'response', type: 'string' }
-  })
-
   Metric.getFiles = async (humanreadable, cb) => {
     let fileNames = await getFileName(humanreadable);
     cb(null, fileNames);

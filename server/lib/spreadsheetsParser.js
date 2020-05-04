@@ -63,6 +63,26 @@ const columns = [
 ]
  
 module.exports = async () => {
+
+  function parseColumnName(columnName){
+    columnName = columnName
+      .trim()
+      .toLowerCase()
+      .replace(".","")
+      .replace(/ /g,"_")
+      .replace(/__/g,"_")
+      .replace(/\(|\)/g, "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+    
+    if (columnName[0] === "["){
+      columnName = columnName.replace("[","").replace("]","")
+      return 'check_'.concat(columnName)
+    } 
+
+    return columnName
+  }
+
   await doc.useServiceAccountAuth({
     client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
     private_key: process.env.GOOGLE_PRIVATE_KEY,
@@ -76,13 +96,23 @@ module.exports = async () => {
 
   console.log(`Cantidad de filas: ${rows.length}`)
   
+  let registers = []
+
   rows.forEach(row => {
-    columns.forEach(column => {
-      let cell = (row[column] == 'No' || row[column] === undefined || row[column] === '') ? false : row[column]
-      console.log(cell)
+    let register = {}
+    columns.forEach((column, i) => {
+      let cell = (row[column] === undefined || row[column] === '') ? false : row[column]
+      let col = parseColumnName(column)
+      register[col] = cell
     });
+    registers.push(register)
   })
   
+  try {
+    registers = JSON.parse(JSON.stringify(registers))
+  } catch(e) {
+    console.log(e);
+  }
 
-  return
+  return registers
 }
