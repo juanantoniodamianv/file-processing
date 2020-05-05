@@ -59,7 +59,8 @@ const columns = [
   'Piezas Dentarias',
   'Prótesis Inferior  Superior',
   'Maxilares',
-  'Fauces'
+  'Fauces',
+  'Form Response Edit URL'
 ]
  
 module.exports = async () => {
