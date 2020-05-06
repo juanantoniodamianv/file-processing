@@ -6,24 +6,39 @@ $.DataTable = require('datatables.net-responsive');
 const columns = [
   { 
     title: 'Fecha',
+    searchable: false,
+    orderable: true
   },
   { 
     title: 'Apellido y Nombre',
+    searchable: true,
+    orderable: true
   },
   { 
     title: 'N° de Documento',
+    searchable: true,
+    orderable: true
   },
   { 
     title: 'Obra Social',
+    searchable: false,
+    orderable: true
   },
   { 
     title: 'N° de Afiliado',
+    searchable: false,
+    orderable: true
   },
   { 
     title: 'Médico Anestesista',
+    searchable: false,
+    orderable: true
   },
   {
-    title: ''
+    title: '',
+    searchable: false,
+    orderable: false,
+    responsivePriority: 1
   }
 ];
 
@@ -48,8 +63,8 @@ export class Table extends Component {
   }
 
   componentDidUpdate(){
-    let data = this.state.items.map(({marca_temporal, apellido_y_nombre, numero_de_documento, obra_social, numero_de_afiliado, medico_anestesista, form_response_edit_url, form_response_edit_url_m}) =>
-      [ marca_temporal, 
+    let data = this.state.items.map(({fecha, apellido_y_nombre, numero_de_documento, obra_social, numero_de_afiliado, medico_anestesista, form_response_edit_url, form_response_edit_url_m}) =>
+      [ fecha, 
         apellido_y_nombre, 
         numero_de_documento, 
         obra_social, 
@@ -66,10 +81,10 @@ export class Table extends Component {
       dom: '<"data-table-wrapper"ft>',
       data,
       columns,
-      ordering: false,
+      ordering: true,
       responsive: true,
       language: {
-        search: 'Buscar'
+        search: 'Buscar Paciente'
       }
     })
   }
@@ -100,7 +115,7 @@ export class Table extends Component {
     } else if (!isLoaded) {
       return <div>Cargando...</div>;
     } else {
-      return <table className="table table-striped table-bordered dt-responsive nowrap" style={{width:'100%'}} ref={ el => this.el= el }></table>;
+      return <table data-order='[[ 0, "desc" ]]' className="table table-striped table-bordered dt-responsive nowrap" style={{width:'100%'}} ref={ el => this.el= el }></table>;
     }
   }
 }
