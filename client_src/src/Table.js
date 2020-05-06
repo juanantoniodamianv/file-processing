@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-const $ = require('jquery');
-$.DataTable = require('datatables.net-responsive');
+import $ from 'jquery';
+
+import 'datatables.net'
+import 'datatables.net-responsive'
+//import 'datatables.net-searchpanes/js/dataTables.searchPanes'
 
 const columns = [
   { 
@@ -31,7 +34,7 @@ const columns = [
   },
   { 
     title: 'Médico Anestesista',
-    searchable: false,
+    searchable: true,
     orderable: true
   },
   {
@@ -75,17 +78,31 @@ export class Table extends Component {
     )
     this.$el = $(this.el)
     this.$el.DataTable({
-      searchPanes:{
-        cascadePanes: true
-      },
       dom: '<"data-table-wrapper"ft>',
       data,
       columns,
       ordering: true,
       responsive: true,
       language: {
-        search: 'Buscar Paciente'
+        search: 'Buscar Paciente',
+        zeroRecords: 'No se han encontrado resultados para tu búsqueda'
+      },
+      initComplete: function () {
+        // eslint-disable-next-line
+        this.api().columns([5]).every( function () {
+            var column = this;
+            var select = $('<select><option value=""></option></select>')
+                .appendTo('#doctor_table_filter')
+                .on('change', function () {
+                  var val = $.fn.dataTable.util.escapeRegex($(this).val());
+                  column.search( val ? val : '', true, false ).draw();
+                });
+            column.data().unique().sort().each( function ( d, j ) {
+                select.append( '<option value="'+d+'">'+d+'</option>' )
+            });
+        });
       }
+
     })
   }
 

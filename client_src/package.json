@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.19.2",
     "datatables.net-responsive": "^2.2.3",
+    "datatables.net-searchpanes": "^1.0.1",
     "mdbreact": "^4.26.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
