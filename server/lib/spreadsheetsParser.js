@@ -1,66 +1,18 @@
 'use strict'
-const { GoogleSpreadsheet } = require('google-spreadsheet')
-const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_DOC_ID)
+const { GoogleSpreadsheet } = require('google-spreadsheet');
+const patient = process.env.SPREADSHEET_DOC_ID_PATIENT;
+const doctor = process.env.SPREADSHEET_DOC_ID_DOCTOR;
 
 const columns = [
   'Marca temporal',
   'Apellido y Nombre',
   'Número de Documento',
   'Fecha',
-  'Médico Anestesista',
   'Obra Social',
   'Número de Afiliado',
-  '[Insuf. Cardíaca]',
-  '[Arritmias]',
-  '[Hipertensión]',
-  '[Hipotensión]',
-  '[Tos]',
-  '[Expectoración]',
-  '[Asma]',
-  '[Hepatopatía]',
-  '[Coagulopatía]',
-  '[Hipertiroidismo]',
-  '[Hipotiroidismo]',
-  '[Nefropatía]',
-  '[Convulsiones]',
-  '[Hipertermia]',
-  '[EPOC]',
-  '[Fuma]',
-  '[Alcohol]',
-  '[Drogas]',
-  '[Alergias]',
-  '[Anemia]',
-  '[Diabetes]',
-  '[Glaucoma]',
-  '[Desnutrido]',
-  '[Deshidratado]',
-  '[Distendido]',
-  '[Shock]',
-  '[Inconsciente]',
-  '[Obnubilado]',
-  'Especificaciones',
-  '[Diuréticos]',
-  '[Digtálicos]',
-  '[Beta Bloqueantes]',
-  '[Antihipertensivos]',
-  '[Antihistamínicos]',
-  '[Corticoides]',
-  '[Insulina]',
-  '[Hipotensores]',
-  '[Anticoagulantes]',
-  '[Antibióticos]',
-  '[Ansiolíticos]',
-  '[Hipoglucemiantes]',
-  '[Anticonvulcionantes]',
-  'Cirugías Anteriores',
-  'Observaciones',
-  'Medicamentos y Dosis',
-  'Apertura Boca (cm)',
-  'Piezas Dentarias',
-  'Prótesis Inferior  Superior',
-  'Maxilares',
-  'Fauces',
-  'Form Response Edit URL'
+  'Médico Anestesista',
+  'Form Response Edit URL',
+  'Form Response Edit URL M'
 ]
  
 module.exports = async () => {
@@ -84,36 +36,48 @@ module.exports = async () => {
     return columnName
   }
 
-  await doc.useServiceAccountAuth({
-    client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-    private_key: process.env.GOOGLE_PRIVATE_KEY,
-  })
-  
-  await doc.loadInfo()
-  console.log(doc.title)
-  let sheet = doc.sheetsByIndex[0]
+  let concatArray = []
+  for (const doc of [doctor, patient]) {
+    let document = new GoogleSpreadsheet(doc)
+    console.log('entre')
+    await document.useServiceAccountAuth({
+      client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+      private_key: process.env.GOOGLE_PRIVATE_KEY,
+    })
 
-  let rows = await sheet.getRows()
+    await document.loadInfo()
+    console.log(`Processing file: ${document.title}`)
 
-  console.log(`Cantidad de filas: ${rows.length}`)
-  
-  let registers = []
+    let sheet = document.sheetsByIndex[0]
+    let rows = await sheet.getRows()
+    let registers = []
+    console.log(`Rows count to this file: ${rows.length}`)
 
-  rows.forEach(row => {
-    let register = {}
-    columns.forEach((column, i) => {
-      let cell = (row[column] === undefined || row[column] === '') ? false : row[column]
-      let col = parseColumnName(column)
-      register[col] = cell
-    });
-    registers.push(register)
+    rows.forEach(row => {
+      let register = {}
+      columns.forEach((column, i) => {
+        let cell = (row[column] === undefined || row[column] === '') ? false : row[column]
+        let col = parseColumnName(column)
+        register[col] = cell
+      });
+      registers.push(register)
+    })
+    
+    concatArray.push(registers)
+  }
+
+  concatArray[1].map(patient => {
+    let result = concatArray[0].findIndex(doctor => {
+      return patient.numero_de_documento === doctor.numero_de_documento && patient.fecha === doctor.fecha && patient.medico_anestesista === doctor.medico_anestesista
+    })
+    if (result != -1) patient.form_response_edit_url_m = concatArray[0][result].form_response_edit_url_m
   })
   
   try {
-    registers = JSON.parse(JSON.stringify(registers))
+    concatArray = JSON.parse(JSON.stringify(concatArray[1]))
   } catch(e) {
     console.log(e);
   }
 
-  return registers
+  return concatArray
 }

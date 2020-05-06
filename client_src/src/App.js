@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <div className="card border-light mb-3">
-        <div className="card-header">Consulta Preanestesista - Ficha Pacientes</div>
+        <div className="card-header">Consulta Preanestésica - Ficha Pacientes</div>
         <div className="card-body">
           <Table />
         </div>

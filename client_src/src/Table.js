@@ -48,8 +48,15 @@ export class Table extends Component {
   }
 
   componentDidUpdate(){
-    let data = this.state.items.map(({marca_temporal, apellido_y_nombre, numero_de_documento, obra_social, numero_de_afiliado, medico_anestesista, form_response_edit_url}) =>
-      [marca_temporal, apellido_y_nombre, numero_de_documento, obra_social, numero_de_afiliado, medico_anestesista, `<a href="${form_response_edit_url}" target="_blank">Ver Formulario</a>`]
+    let data = this.state.items.map(({marca_temporal, apellido_y_nombre, numero_de_documento, obra_social, numero_de_afiliado, medico_anestesista, form_response_edit_url, form_response_edit_url_m}) =>
+      [ marca_temporal, 
+        apellido_y_nombre, 
+        numero_de_documento, 
+        obra_social, 
+        numero_de_afiliado, 
+        medico_anestesista, 
+        ` ${this.linkActions(form_response_edit_url, 'Formulario Paciente')}
+          ${this.linkActions(form_response_edit_url_m, 'Formulario Medico')}`]
     )
     this.$el = $(this.el)
     this.$el.DataTable({
@@ -65,6 +72,10 @@ export class Table extends Component {
         search: 'Buscar'
       }
     })
+  }
+
+  linkActions = (url, title) => {
+    return url ? `<a href="${url}" class="btn btn-sm btn-primary btn-block" target="_blank">${title}</a>` : ''
   }
 
   getRegisters = async () => {
