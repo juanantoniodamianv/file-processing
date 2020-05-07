@@ -88,14 +88,18 @@ export class Table extends Component {
         zeroRecords: 'No se han encontrado resultados para tu búsqueda'
       },
       initComplete: function () {
+        document.getElementById('DataTables_Table_0').style.display = 'none'
+        document.getElementById('DataTables_Table_0_filter').style.display = 'none'
         // eslint-disable-next-line
         this.api().columns([5]).every( function () {
             var column = this;
-            var select = $('<select><option value=""></option></select>')
+            var select = $('<select><option value="" disabled selected style="display:none;"></option></select>')
                 .appendTo('#doctor_table_filter')
                 .on('change', function () {
                   var val = $.fn.dataTable.util.escapeRegex($(this).val());
                   column.search( val ? val : '', true, false ).draw();
+                  document.getElementById('DataTables_Table_0').style.display = 'table';
+                  document.getElementById('DataTables_Table_0_filter').style.display = 'block';
                 });
             column.data().unique().sort().each( function ( d, j ) {
                 select.append( '<option value="'+d+'">'+d+'</option>' )
@@ -107,7 +111,7 @@ export class Table extends Component {
   }
 
   linkActions = (url, title) => {
-    return url ? `<a href="${url}" class="btn btn-sm btn-primary btn-block" target="_blank">${title}</a>` : ''
+    return url ? `<a href="${url}" class="btn btn-sm btn-primary btn-block mb-1" target="_blank">${title}</a>` : ''
   }
 
   getRegisters = async () => {
@@ -148,8 +152,9 @@ export class Table extends Component {
         <div>
           <div className="row">
             <div id="doctor_table_filter">Seleccionar Médico </div>
+            
             <button type="button" id="btnToClipboard" className="btn btn-secondary btn-sm mt-0" data-toggle="tooltip" title="Copiar URL al portapapeles" onMouseOut={this.refreshTooltip.bind(this)} onClick={this.toClipboard.bind(this)}>
-              Copiar url formulario paciente
+              Copiar URL Formulario Paciente
             </button>
           </div>
           <table data-order='[[ 0, "desc" ]]' className="table table-striped table-bordered dt-responsive nowrap" style={{width:'100%'}} ref={ el => this.el= el }></table>
