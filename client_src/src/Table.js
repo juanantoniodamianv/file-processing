@@ -125,6 +125,18 @@ export class Table extends Component {
     }
   }
 
+  toClipboard = () => {
+    navigator.clipboard.writeText("https://forms.gle/JRKHLXMjQtzLDQvW7");
+    
+    let el = document.getElementById("btnToClipboard");
+    el.title = "URL copiada al portapapeles";
+  }
+
+  refreshTooltip = () => {
+    let el = document.getElementById("btnToClipboard");
+    el.title = "Copiar URL";
+  }
+
   render() {
     const { error, isLoaded } = this.state;
     if (error) {
@@ -132,7 +144,17 @@ export class Table extends Component {
     } else if (!isLoaded) {
       return <div>Cargando...</div>;
     } else {
-      return <table data-order='[[ 0, "desc" ]]' className="table table-striped table-bordered dt-responsive nowrap" style={{width:'100%'}} ref={ el => this.el= el }></table>;
+      return (
+        <div>
+          <div className="row">
+            <div id="doctor_table_filter">Seleccionar Médico </div>
+            <button type="button" id="btnToClipboard" className="btn btn-secondary btn-sm mt-0" data-toggle="tooltip" title="Copiar URL al portapapeles" onMouseOut={this.refreshTooltip.bind(this)} onClick={this.toClipboard.bind(this)}>
+              Copiar url formulario paciente
+            </button>
+          </div>
+          <table data-order='[[ 0, "desc" ]]' className="table table-striped table-bordered dt-responsive nowrap" style={{width:'100%'}} ref={ el => this.el= el }></table>
+        </div>
+      );
     }
   }
 }
