@@ -152,10 +152,10 @@ export class Table extends Component {
         <div>
           <div className="row">
             <div id="doctor_table_filter">Seleccionar Médico </div>
-            
-            <button type="button" id="btnToClipboard" className="btn btn-secondary btn-sm mt-0" data-toggle="tooltip" title="Copiar URL al portapapeles" onMouseOut={this.refreshTooltip.bind(this)} onClick={this.toClipboard.bind(this)}>
+            <button type="button" id="btnToClipboard" className="btn btn-secondary btn-sm mt-0" data-toggle="tooltip" title="Copiar en el portapapeles la dirección de la pagina para mandar al paciente" onMouseOut={this.refreshTooltip.bind(this)} onClick={this.toClipboard.bind(this)}>
               Copiar URL Formulario Paciente
             </button>
+            <a href="https://forms.gle/FqMpEQwLaFrX41TG6" class="btn btn-secondary btn-sm mt-0 ml-1" target="_blank" title="Abrir el formulario del médico en otra pestaña del navegador">Formulario del Médico</a>
           </div>
           <table data-order='[[ 0, "desc" ]]' className="table table-striped table-bordered dt-responsive nowrap" style={{width:'100%'}} ref={ el => this.el= el }></table>
         </div>
