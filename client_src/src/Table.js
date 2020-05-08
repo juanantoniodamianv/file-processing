@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { MDBBtn, MDBIcon } from "mdbreact";
 import axios from 'axios';
 import $ from 'jquery';
 
@@ -44,6 +45,9 @@ const columns = [
     responsivePriority: 1
   }
 ];
+
+//const patientNewForm = ''
+const doctorNewForm = 'https://docs.google.com/forms/d/e/1FAIpQLSc1lShphLLta13iZLL8X48QWM9288W64Pg-FiHTyyhiE87Ukg/viewform'//?entry.870843167=ARREDONDO+MARCELINO+20928601000
 
 export class Table extends Component { 
 
@@ -100,6 +104,7 @@ export class Table extends Component {
                   column.search( val ? val : '', true, false ).draw();
                   document.getElementById('DataTables_Table_0').style.display = 'table';
                   document.getElementById('DataTables_Table_0_filter').style.display = 'block';
+                  document.getElementById('btnToDoctorNewForm').href = `${doctorNewForm}?entry.870843167=${val.replace(/ /g,"+")}`;
                 });
             column.data().unique().sort().each( function ( d, j ) {
                 select.append( '<option value="'+d+'">'+d+'</option>' )
@@ -111,7 +116,9 @@ export class Table extends Component {
   }
 
   linkActions = (url, title) => {
-    return url ? `<a href="${url}" class="btn btn-sm btn-primary btn-block mb-1" target="_blank">${title}</a>` : ''
+    return url 
+      ? `<a href="${url}" class="btn btn-sm btn-primary btn-block mb-1" target="_blank">${title}</a>` 
+      : ``
   }
 
   getRegisters = async () => {
@@ -138,7 +145,7 @@ export class Table extends Component {
 
   refreshTooltip = () => {
     let el = document.getElementById("btnToClipboard");
-    el.title = "Copiar en el portapapeles la dirección de la pagina para mandar al paciente";
+    el.title = "Copiar en el portapapeles la url del formulario para enviar al paciente";
   }
 
   render() {
@@ -152,10 +159,18 @@ export class Table extends Component {
         <div>
           <div className="row">
             <div id="doctor_table_filter">Seleccionar Médico </div>
-            <button type="button" id="btnToClipboard" className="btn btn-secondary btn-sm mt-0" data-toggle="tooltip" title="Copiar en el portapapeles la dirección de la pagina para mandar al paciente" onMouseOut={this.refreshTooltip.bind(this)} onClick={this.toClipboard.bind(this)}>
+{/*             <button type="button" id="btnToClipboard" className="btn btn-secondary btn-sm mt-0" data-toggle="tooltip" title="Copiar en el portapapeles la dirección de la pagina para mandar al paciente" onMouseOut={this.refreshTooltip.bind(this)} onClick={this.toClipboard.bind(this)}>
               Copiar URL Formulario Paciente
-            </button>
-            <a href="https://forms.gle/FqMpEQwLaFrX41TG6" class="btn btn-secondary btn-sm mt-0 ml-1" target="_blank" title="Abrir el formulario del médico en otra pestaña del navegador">Formulario del Médico</a>
+            </button> */}
+
+            <MDBBtn color="secondary" size="sm" className="mt-0" id="btnToClipboard" onMouseOut={this.refreshTooltip.bind(this)} onClick={this.toClipboard.bind(this)} title="Copiar en el portapapeles la url del formulario para enviar al paciente">
+              Copiar URL Formulario Paciente <MDBIcon icon="copy" className="ml-1" />
+            </MDBBtn>
+
+            <MDBBtn href="https://forms.gle/FqMpEQwLaFrX41TG6" color="secondary" size="sm" className="mt-0 ml-1" target="_blank" id="btnToDoctorNewForm" title="Nuevo formulario en otra pestaña del navegador">
+              Formulario del Médico <MDBIcon icon="external-link-alt" className="ml-1" />
+            </MDBBtn>
+
           </div>
           <table data-order='[[ 0, "desc" ]]' className="table table-striped table-bordered dt-responsive nowrap" style={{width:'100%'}} ref={ el => this.el= el }></table>
         </div>
