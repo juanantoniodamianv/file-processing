@@ -138,7 +138,7 @@ export class Table extends Component {
 
   refreshTooltip = () => {
     let el = document.getElementById("btnToClipboard");
-    el.title = "Copiar URL";
+    el.title = "Copiar en el portapapeles la dirección de la pagina para mandar al paciente";
   }
 
   render() {
