@@ -127,7 +127,7 @@ export class Table extends Component {
     medico_anestesista = medico_anestesista.replace(/ /g,"+");
 
     url = `${doctorNewForm}?entry.905105377=${apellido_y_nombre}&entry.1361452324=${numero_de_documento}&entry.414077469=${fecha}&entry.870843167=${medico_anestesista}`;
-    return `<a href="${url}" class="btn btn-sm btn-primary btn-block mb-1" target="_blank">${title} <span class="badge">nuevo</span></a>`;
+    return `<a href="${url}" class="btn btn-sm btn-primary btn-block mb-1" target="_blank">${title} <span class="badge badge-secondary">nuevo</span></a>`;
   }
 
   getRegisters = async () => {
