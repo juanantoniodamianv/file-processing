@@ -5,9 +5,7 @@ import $ from 'jquery';
 
 import 'datatables.net'
 import 'datatables.net-responsive'
-//import 'datatables.net-searchpanes/js/dataTables.searchPanes'
 
-//const api_url = 'http://localhost:3000/' || '/'
 const columns = [
   { 
     title: 'Fecha',
@@ -57,7 +55,6 @@ export class Table extends Component {
     isLoaded: false,
     items: []
   };
-
   
   componentDidMount() {
     this.getRegisters();
@@ -147,9 +144,10 @@ export class Table extends Component {
 
   toClipboard = () => {
     navigator.clipboard.writeText("https://forms.gle/JRKHLXMjQtzLDQvW7");
-    
-    let el = document.getElementById("btnToClipboard");
-    el.title = "URL copiada al portapapeles";
+    let alert = document.querySelector(".mdbAlert")
+    alert.children[0].innerHTML = "Se ha copiado la url del formulario al portapapeles, ahora puede compartirlo con su paciente.";
+    alert.classList.remove('d-none');
+    setTimeout(() => { alert.classList.add('d-none') }, 4000);
   }
 
   refreshTooltip = () => {
@@ -168,9 +166,6 @@ export class Table extends Component {
         <div>
           <div className="row">
             <div id="doctor_table_filter">Seleccionar Médico </div>
-{/*             <button type="button" id="btnToClipboard" className="btn btn-secondary btn-sm mt-0" data-toggle="tooltip" title="Copiar en el portapapeles la dirección de la pagina para mandar al paciente" onMouseOut={this.refreshTooltip.bind(this)} onClick={this.toClipboard.bind(this)}>
-              Copiar URL Formulario Paciente
-            </button> */}
 
             <MDBBtn color="secondary" size="sm" className="mt-0" id="btnToClipboard" onMouseOut={this.refreshTooltip.bind(this)} onClick={this.toClipboard.bind(this)} title="Copiar en el portapapeles la url del formulario para enviar al paciente">
               Copiar URL Formulario Paciente <MDBIcon icon="copy" className="ml-1" />

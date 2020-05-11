@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import {Table} from "./Table";
+import { MDBAlert } from "mdbreact";
 
 function App() {
 
@@ -11,6 +12,9 @@ function App() {
         <div className="card-body">
           <Table />
         </div>
+        <MDBAlert color="success" className="d-none mdbAlert">
+          <span>Alert</span>
+        </MDBAlert>
       </div>
     </div>
   );
