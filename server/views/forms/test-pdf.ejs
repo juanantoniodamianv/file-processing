@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <style>
+    html {
+      font-family: Arial, sans-serif;
+      font-size: 10px;
+      width: 21cm;
+      height: 29.7cm;
+    }
+    .page {
+      page-break-after: always;
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div id="pageHeader-first"><h5>Consulta Preanestesica</h5></div>
+      <div class="card w-75">
+        <div class="card-header">
+          Datos del Paciente
+        </div>
+        <div class="card-body">            
+          <div class="from-row">
+            <div class="form-group">
+              <label>Fecha</label>
+              <input readonly class="form-control-plaintext" placeholder="Fecha">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label>Apellido y Nombre</label>
+              <input readonly class="form-control-plaintext" placeholder="Apellido y Nombre">
+            </div>
+
+            <div class="form-group col-6">
+              <label>N° de Documento</label>
+              <input readonly class="form-control-plaintext" placeholder="Número de Documento">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label>Obra Social</label>
+              <input readonly class="form-control-plaintext" placeholder="Obra Social">
+            </div>
+
+            <div class="form-group col-6">
+              <label>N° de Afiliado</label>
+              <input readonly class="form-control-plaintext" placeholder="Número de Afiliado">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label>Médico Anestesista</label>
+              <input readonly class="form-control-plaintext" placeholder="Médico Anestesista">
+            </div>
+
+            <div class="form-group col-6">
+              <label>N° de CUIT</label>
+              <input readonly class="form-control-plaintext" placeholder="Número de CUIT">
+            </div>
+          </div>
+        </div>
+      </div>
+    <div id="pageFooter-first">Footer on first page</div>
+  </div>
+  
+  <div class="page">
+    <div id="pageHeader-2">Header on second page</div>
+    <div class="card w-75">
+      <div class="card-header">
+        Clínica Preoperatorio
+      </div>
+      <div class="card-body">
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label></label>
+          </div>
+          <div class="form-group col-1">
+            <label>Si</label>
+          </div>
+          <div class="form-group col-1">
+            <label>No</label>
+          </div>
+        </div>
+
+        <% ['Arritmias',
+        'Hipertensión',
+        'Hipotensión',
+        'Tos',
+        'Expectoración',
+        'Asma',
+        'Hepatopatía',
+        'Coagulopatía',
+        'Hipertiroidismo',
+        'Hipotiroidismo',
+        'Nefropatía'].forEach(function(item){ %>
+
+        <div class="form-row">
+          <div class="form-group col-6">
+            <label><%= item %></label>
+          </div>
+          <div class="form-group col-1">
+            <input class="form-control" type="checkbox">
+          </div>
+          <div class="form-group col-1">
+            <input class="form-control" checked type="checkbox">
+          </div>
+        </div>
+
+        <% }); %>
+
+      </div>
+    </div>
+    <div id="pageFooter-2">Footer on second page</div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
+
+

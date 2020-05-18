@@ -14,8 +14,13 @@ const columns = [
   'Form Response Edit URL',
   'Form Response Edit URL M'
 ]
+
+const generatePdf = require('../lib/generatePdf');
+
  
 module.exports = async () => {
+
+  await generatePdf()
 
   function parseColumnName(columnName){
     columnName = columnName
