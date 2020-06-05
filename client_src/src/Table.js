@@ -8,32 +8,32 @@ import 'datatables.net-responsive'
 
 const columns = [
   { 
-    title: 'Fecha',
+    title: 'Fecha de consulta',
     searchable: false,
     orderable: true
   },
   { 
-    title: 'Apellido y Nombre',
+    title: 'Apellido y nombre',
     searchable: true,
     orderable: true
   },
   { 
-    title: 'N° de Documento',
+    title: 'N° de documento',
     searchable: true,
     orderable: true
   },
   { 
-    title: 'Obra Social',
+    title: 'Obra social',
     searchable: false,
     orderable: true
   },
   { 
-    title: 'N° de Afiliado',
+    title: 'N° de afiliado',
     searchable: false,
     orderable: true
   },
   { 
-    title: 'Médico Anestesista',
+    title: 'Médico anestesista',
     searchable: true,
     orderable: true
   },
@@ -68,15 +68,15 @@ export class Table extends Component {
   }
 
   componentDidUpdate(){
-    let data = this.state.items.map(({fecha, apellido_y_nombre, numero_de_documento, obra_social, numero_de_afiliado, medico_anestesista, form_response_edit_url, form_response_edit_url_m}) =>
-      [ fecha, 
+    let data = this.state.items.map(({fecha_de_consulta, apellido_y_nombre, numero_de_documento, obra_social, numero_de_afiliado, medico_anestesista, form_response_edit_url, form_response_edit_url_m}) =>
+      [ fecha_de_consulta, 
         apellido_y_nombre, 
         numero_de_documento, 
         obra_social, 
         numero_de_afiliado, 
         medico_anestesista, 
         ` ${this.linkActions(form_response_edit_url, 'Formulario Paciente')}
-          ${this.linkActions(form_response_edit_url_m, 'Formulario Medico', {fecha, apellido_y_nombre, numero_de_documento, medico_anestesista})}`]
+          ${this.linkActions(form_response_edit_url_m, 'Formulario Medico', {fecha_de_consulta, apellido_y_nombre, numero_de_documento, medico_anestesista})}`]
     )
     this.$el = $(this.el)
     this.$el.DataTable({
@@ -117,13 +117,13 @@ export class Table extends Component {
     if (url) {
       return `<a href="${url}" class="btn btn-sm btn-primary btn-block mb-1" target="_blank">${title}</a>`;
     }
-    let { fecha, apellido_y_nombre, numero_de_documento, medico_anestesista } = attr;
+    let { fecha_de_consulta, apellido_y_nombre, numero_de_documento, medico_anestesista } = attr;
 
-    fecha = fecha.split('/').map(e => (e.length === 1) ? `0${e}` : e).reverse().join('-');
+    fecha_de_consulta = fecha_de_consulta.split('/').map(e => (e.length === 1) ? `0${e}` : e).reverse().join('-');
     apellido_y_nombre = apellido_y_nombre.replace(/ /g,"+");
     medico_anestesista = medico_anestesista.replace(/ /g,"+");
 
-    url = `${doctorNewForm}?entry.905105377=${apellido_y_nombre}&entry.1361452324=${numero_de_documento}&entry.414077469=${fecha}&entry.870843167=${medico_anestesista}`;
+    url = `${doctorNewForm}?entry.905105377=${apellido_y_nombre}&entry.1361452324=${numero_de_documento}&entry.414077469=${fecha_de_consulta}&entry.870843167=${medico_anestesista}`;
     return `<a href="${url}" class="btn btn-sm btn-primary btn-block mb-1" target="_blank">${title} <span class="badge badge-secondary">nuevo</span></a>`;
   }
 

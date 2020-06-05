@@ -98,5 +98,9 @@
   "PatientForm": {
     "dataSource": "mongodb",
     "public": true
+  },
+  "Container": {
+    "dataSource": "amazonS3",
+    "public": true
   }
 }

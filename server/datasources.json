@@ -9,5 +9,9 @@
     "provider": "filesystem",
     "root": "./storage",
     "nameConflict": "makeUnique"
+  },
+  "amazonS3": {
+    "name": "amazonS3",
+    "connector": "loopback-component-storage"
   }
 }

@@ -2,7 +2,7 @@
 
 const pdf = require('html-pdf')
 const ejs = require('ejs')
-const path = require('path')
+const uploadFileToS3 = require('./uploadToAwsS3')
 
 module.exports = async () => {
 
@@ -11,16 +11,18 @@ module.exports = async () => {
   })
 
   let file = await (new Promise((resolve, reject) => {
-    let filename = 'storage/forms/name.pdf'
+    let filename = `${Date.now()}.pdf`
 
     pdf.create(html, {
       type: 'pdf',
       format: 'A4',
       orientation: 'portrait'
 
-    }).toFile(path.join(__dirname, '../../' + filename), (err, file) => {
+    }).toBuffer((err, buffer) => {
       if (err) return reject(err)
-      resolve(filename)
+      uploadFileToS3(buffer, filename)
+      console.log('This is a buffer:', Buffer.isBuffer(buffer));
+      resolve(buffer)
     })
   }))
 
