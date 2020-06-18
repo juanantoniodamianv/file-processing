@@ -1,0 +1,32 @@
+{
+  "name": "PatientHeaderData",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "fechaDeConsulta": {
+      "type": "string",
+      "required": true
+    },
+    "numeroDeDocumento": {
+      "type": "string",
+      "required": true
+    },
+    "cuitMedicoAnestesista": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "patientHeaderDataFileUploads": {
+      "type": "hasMany",
+      "model": "PatientHeaderDataFileUpload",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

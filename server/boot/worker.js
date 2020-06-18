@@ -2,14 +2,34 @@
 
 const chalk = require('chalk');
 const Queue = require('bull');
-const fileProcessor = new Queue('Processing tsv file', process.env.REDIS_URL);
+//const fileProcessor = new Queue('Processing tsv file', process.env.REDIS_URL);
+const fileProcessor = new Queue('Populate from spreadsheets to mongodb', process.env.REDIS_URL);
+const fileProcessorPdfFiles = new Queue('Generating PDF files', process.env.REDIS_URL);
 const fs = require('fs');
 const path = require('path');
 const processFile = require('../lib/processFile');
 
+const populatePatientForm = require('../lib/populatePatientForm');
+const generatePatientPdf = require('../lib/generatePatientPdf');
+
 module.exports = function(app) {
   if (!app.isBoot) return;
 
+  const PatientForm = app.models.PatientForm;
+
+  fileProcessor.process(async (job, done) => {
+    console.log(chalk.cyan(`\n[Bull] Launched: ${Date(Date.now()).toString()}`));
+    console.log(chalk.cyan('[Bull] Populating spreadsheets to mongodb'));
+    try {
+      populatePatientForm(PatientForm);
+    } catch(err) {
+      console.log(chalk.red(new Error(`[Bull error]: ${err}`)));
+    }
+
+    done();
+  });
+
+  /* ----------------------------------------------------------------------------------------
   const Metric = app.models.Metric;
 
   fileProcessor.process(async (job, done) => {
@@ -34,14 +54,7 @@ module.exports = function(app) {
 
     done();
   });
-
-  fileProcessor.add({ foo: 'bar' },{
-    repeat: {
-      every: 10000,
-      limit: 100
-    }
-  });
-
+  
   let getFileName = () => {
     let filePath = path.join(__dirname, "../../storage/tsv_files");
     return new Promise((resolve, reject) => {
@@ -49,5 +62,35 @@ module.exports = function(app) {
         err ? reject(err) : resolve(files);
       });
     });
-  }
+  } 
+    
+----------------------------------------------------------------------------------------*/
+
+  fileProcessor.add({ foo: 'bar' },{
+    repeat: {
+      every: 1000,
+      limit: 1
+    }
+  });
+  
+
+  /* Generar PDF segun el modelo PatientForm */
+  /* fileProcessorPdfFiles.process(async (job, done) => {
+    console.log(chalk.cyan(`\n[Bull] Launched: ${Date(Date.now()).toString()}`));
+    console.log(chalk.cyan('[Bull] Generating pdf files'));
+    try {
+      generatePatientPdf(PatientForm);
+    } catch(err) {
+      console.log(chalk.red(new Error(`[Bull error]: ${err}`)));
+    }
+
+    done();
+  });
+
+  fileProcessorPdfFiles.add({ foo: 'bar' },{
+    repeat: {
+      every: 1000,
+      limit: 1
+    }
+  }); */ 
 }

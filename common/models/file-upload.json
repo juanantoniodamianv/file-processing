@@ -1,0 +1,35 @@
+{
+  "name": "FileUpload",
+  "plural": "FileUploads",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "link": {
+      "type": "string",
+      "required": true
+    },
+    "etag": {
+      "type": "string"
+    },
+    "bucket": {
+      "type": "string",
+      "required": true
+    },
+    "image": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "patientHeaderDataFileUploads": {
+      "type": "hasOne",
+      "model": "PatientHeaderDataFileUpload",
+      "foreignKey": ""
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

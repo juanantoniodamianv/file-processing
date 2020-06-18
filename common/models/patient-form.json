@@ -7,7 +7,15 @@
     "validateUpsert": true
   },
   "properties": {
+    "pdfHasCreated": {
+      "type": "boolean",
+      "default": false
+    },
     "marcaTemporal": {
+      "type": "string",
+      "required": true
+    },
+    "fechaDeConsulta": {
       "type": "string",
       "required": true
     },
@@ -15,8 +23,29 @@
       "type": "string",
       "required": true
     },
-    "fecha": {
-      "type": "string"
+    "numeroDeDocumento": {
+      "type": "string",
+      "required": true
+    },
+    "obraSocial": {
+      "type": "string",
+      "required": true
+    },
+    "numeroAfiliado": {
+      "type": "string",
+      "required": true
+    },
+    "edad": {
+      "type": "string",
+      "default": ""
+    },
+    "peso": {
+      "type": "string",
+      "default": ""
+    },
+    "medicoDeCabecera": {
+      "type": "string",
+      "default": ""
     },
     "medicoAnestesista": {
       "type": "string",
@@ -26,158 +55,129 @@
       "type": "string",
       "required": true
     },
-    "obraSocial": {
+    "cirugiaOProcedimientoARealizar": {
       "type": "string",
-      "required": true,
-      "default": "numeroAfiliado"
-    },
-    "numeroAfiliado": {
-      "type": "string",
-      "required": true
-    },
-    "insuficienciaCardiaca": {
-      "type": "boolean"
-    },
-    "arritmias": {
-      "type": "boolean"
-    },
-    "hipertension": {
-      "type": "boolean"
-    },
-    "hipotension": {
-      "type": "boolean"
-    },
-    "tos": {
-      "type": "boolean"
-    },
-    "expectoracion": {
-      "type": "boolean"
-    },
-    "asma": {
-      "type": "boolean"
-    },
-    "hepatopatia": {
-      "type": "boolean"
-    },
-    "coagulopatia": {
-      "type": "boolean"
-    },
-    "hipertiroidismo": {
-      "type": "boolean"
-    },
-    "hipotiroidismo": {
-      "type": "boolean"
-    },
-    "nefropatia": {
-      "type": "boolean"
-    },
-    "convulsiones": {
-      "type": "boolean"
-    },
-    "hipertermia": {
-      "type": "boolean"
-    },
-    "epoc": {
-      "type": "boolean"
-    },
-    "fuma": {
-      "type": "boolean"
-    },
-    "alcohol": {
-      "type": "boolean"
-    },
-    "drogas": {
-      "type": "boolean"
-    },
-    "alergias": {
-      "type": "boolean"
-    },
-    "anemia": {
-      "type": "boolean"
-    },
-    "diabetes": {
-      "type": "boolean"
-    },
-    "glaucoma": {
-      "type": "boolean"
-    },
-    "desnutrido": {
-      "type": "boolean"
-    },
-    "deshidratado": {
-      "type": "boolean"
-    },
-    "distendido": {
-      "type": "boolean"
-    },
-    "obnubilado": {
-      "type": "boolean"
-    },
-    "especificaciones": {
-      "type": "string"
-    },
-    "diureticos": {
-      "type": "boolean"
-    },
-    "digtalicos": {
-      "type": "boolean"
-    },
-    "betaBloqueantes": {
-      "type": "boolean"
-    },
-    "antihipertensivos": {
-      "type": "boolean"
-    },
-    "antihistaminicos": {
-      "type": "boolean"
-    },
-    "corticoides": {
-      "type": "boolean"
-    },
-    "insulina": {
-      "type": "boolean"
-    },
-    "hipotensores": {
-      "type": "boolean"
-    },
-    "anticoagulantes": {
-      "type": "boolean"
-    },
-    "antibioticos": {
-      "type": "boolean"
-    },
-    "ansioliticos": {
-      "type": "boolean"
-    },
-    "hipoglucemiantes": {
-      "type": "boolean"
-    },
-    "anticonvulcionantes": {
-      "type": "boolean"
+      "default": ""
     },
     "cirugiasAnteriores": {
-      "type": "string"
+      "type": "string",
+      "default": ""
     },
-    "observaciones": {
-      "type": "string"
+    "antecedentesDeAlgunaEnfermedad": {
+      "type": "string",
+      "default": ""
     },
-    "medicamentoYDosis": {
-      "type": "string"
+    "arritmias": {
+      "type": "boolean",
+      "default": false
     },
-    "aperturaBoca": {
-      "type": "string"
+    "asma": {
+      "type": "boolean",
+      "default": false
     },
-    "piezasDentarias": {
-      "type": "string"
+    "diabetes": {
+      "type": "boolean",
+      "default": false
     },
-    "protesisInferiorSuperior": {
-      "type": "string"
+    "epoc": {
+      "type": "boolean",
+      "default": false
     },
-    "maxilares": {
-      "type": "string"
+    "escoliosis": {
+      "type": "boolean",
+      "default": false
     },
-    "fauces": {
-      "type": "string"
+    "fuma": {
+      "type": "boolean",
+      "default": false
+    },
+    "hipertiroidismo": {
+      "type": "boolean",
+      "default": false
+    },
+    "hipotiroidismo": {
+      "type": "boolean",
+      "default": false
+    },
+    "presionArterial": {
+      "type": "boolean",
+      "default": false
+    },
+    "cuandoDejoDeFumar": {
+      "type": "string",
+      "default": ""
+    },
+    "problemasRenales": {
+      "type": "string",
+      "default": ""
+    },
+    "otrasEnfermedades": {
+      "type": "string",
+      "default": ""
+    },
+    "medicacionHabitual": {
+      "type": "string",
+      "default": ""
+    },
+    "aas": {
+      "type": "boolean",
+      "default": false
+    },
+    "sintrom": {
+      "type": "boolean",
+      "default": false
+    },
+    "clexane": {
+      "type": "boolean",
+      "default": false
+    },
+    "alergiaAMedicamentos": {
+      "type": "string",
+      "default": ""
+    },
+    "amoxicilina": {
+      "type": "boolean",
+      "default": true
+    },
+    "cefaexina": {
+      "type": "boolean",
+      "default": true
+    },
+    "diclofenac": {
+      "type": "boolean",
+      "default": true
+    },
+    "dipirona": {
+      "type": "boolean",
+      "default": true
+    },
+    "ibuprofeno": {
+      "type": "boolean",
+      "default": true
+    },
+    "pescado": {
+      "type": "boolean",
+      "default": false
+    },
+    "huevo": {
+      "type": "boolean",
+      "default": false
+    },
+    "alergiaAOtroAlimento": {
+      "type": "string",
+      "default": ""
+    },
+    "aperturaBucalNormal": {
+      "type": "string",
+      "default": ""
+    },
+    "protesisDental": {
+      "type": "string",
+      "default": ""
+    },
+    "limitacionParaMoverElCuello": {
+      "type": "string",
+      "default": ""
     }
   },
   "validations": [],

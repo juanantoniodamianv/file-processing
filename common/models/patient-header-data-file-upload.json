@@ -1,0 +1,33 @@
+{
+  "name": "PatientHeaderDataFileUpload",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "patientHeaderDataId": {
+      "type": "string",
+      "required": true
+    },
+    "fileUploadId": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "patientHeaderData": {
+      "type": "belongsTo",
+      "model": "PatientHeaderData",
+      "foreignKey": "patientHeaderDataId"
+    },
+    "fileUpload": {
+      "type": "belongsTo",
+      "model": "FileUpload",
+      "foreignKey": "fileUploadId"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

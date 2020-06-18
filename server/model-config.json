@@ -102,5 +102,17 @@
   "Container": {
     "dataSource": "amazonS3",
     "public": true
+  },
+  "FileUpload": {
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "PatientHeaderData": {
+    "dataSource": "mongodb",
+    "public": true
+  },
+  "PatientHeaderDataFileUpload": {
+    "dataSource": "mongodb",
+    "public": true
   }
 }

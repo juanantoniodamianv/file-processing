@@ -4,14 +4,11 @@ const pdf = require('html-pdf')
 const ejs = require('ejs')
 const uploadFileToS3 = require('./uploadToAwsS3')
 
-module.exports = async () => {
+module.exports = async (data, ejsFile, filename = `${Date.now()}.pdf`) => {
 
-  let html = await ejs.renderFile('server/views/forms/pdf-v1.ejs', {
-
-  })
+  let html = await ejs.renderFile(`server/views/forms/${ejsFile}.ejs`, { data })
 
   let file = await (new Promise((resolve, reject) => {
-    let filename = `${Date.now()}.pdf`
 
     pdf.create(html, {
       type: 'pdf',

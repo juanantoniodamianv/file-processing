@@ -20,9 +20,9 @@
 </head>
 <body>
   <div class="page">
-    <div id="pageHeader"><h5>Consulta Preanestesica</h5></div>
+    <h5>Consulta Preanestesica</h5>
       <div class="card w-75 m-3">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header bg-transparent border-success">
           Datos del Paciente
         </div>
         <div class="card-body">            
@@ -95,7 +95,7 @@
 
         </div>
 
-        <div class="card-header bg-primary text-white">
+        <div class="card-header bg-transparent border-success">
           Clínica Preoperatorio
         </div>
         <div class="card-body">
@@ -126,30 +126,44 @@
               <label>No</label>
             </div>
           </div>
+
+          <%
+            let objs = [
+              {item: 'Arritmias', val: data.arritmias},
+              {item: 'Asma', val: data.asma},
+              {item: 'EPOC', val: data.epoc},
+              {item: 'Escoliosis', val: data.escoliosis},
+              {item: 'Fuma', val: data.fuma},
+              {item: 'Hipertiroidismo', val: data.hipertiroidismo},
+              {item: 'Hipotiroidismo', val: data.hipotiroidismo},
+              {item: 'Presión Arterial', val: data.presionArterial},
+            ];
+          %>
   
-          <% ['Arritmias',
-          'Asma',
-          'Diabetes',
-          'EPOC',
-          'Escoliosis',
-          'Fuma',
-          'Hipertiroidismo',
-          'Hipotiroidismo',
-          'Presión Arterial'].forEach(function(item){ %>
+          <% for (const v of objs) {%>
   
           <div class="form-row">
             <div class="form-group col-6">
-              <label><%= item %></label>
+              <label><%= v.item %></label>
+            </div>
+            <% if (v.val) {%>
+            <div class="form-group col-1">
+              <input class="form-control" checked type="checkbox">
             </div>
             <div class="form-group col-1">
               <input class="form-control" type="checkbox">
             </div>
-            <div class="form-group col-1">
-              <input class="form-control" checked type="checkbox">
-            </div>
+            <%} else {%>
+              <div class="form-group col-1">
+                <input class="form-control" type="checkbox">
+              </div>
+              <div class="form-group col-1">
+                <input class="form-control" checked type="checkbox">
+              </div>
+            <%}%>
           </div>
   
-          <% }); %>
+          <% } %>
   
           <div class="form-row">
             <div class="form-group col-12">
@@ -167,7 +181,7 @@
   
           <div class="form-row">
             <div class="form-group col-12">
-              <label>Otras enfermedades</label>
+              <label>Otras enfermedades:</label>
               <label><b><%= data.otrasEnfermedades %></b></label>
             </div>
           </div>
@@ -179,14 +193,14 @@
   <div class="page">
     <div class="card w-75 m-3">
 
-      <div class="card-header bg-primary text-white">
+      <div class="card-header bg-transparent border-success">
         Medicación Habitual
       </div>
 
       <div class="card-body">
         <div class="form-row">
           <div class="form-group col-12">
-            <label>Medicación habitual (nombre y hora)</label>
+            <label>Medicación habitual (nombre y hora):</label>
             <label><b><%= data.medicacionHabitual %></b></label>
           </div>
         </div>
@@ -204,24 +218,38 @@
           </div>
         </div>
 
-        <% ['Arritmias',
-        'AAS',
-        'Sintrom',
-        'Clexane'].forEach(function(item){ %>
+        <%
+        let objs_1 = [
+          {item: 'AAS', val: data.aas},
+          {item: 'Sintrom', val: data.sintrom},
+          {item: 'Clexane', val: data.clexane}
+        ];
+        %>
 
-        <div class="form-row">
-          <div class="form-group col-6">
-            <label><%= item %></label>
+        <% for (const v of objs_1) {%>
+  
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label><%= v.item %></label>
+            </div>
+            <% if (v.val) {%>
+            <div class="form-group col-1">
+              <input class="form-control" checked type="checkbox">
+            </div>
+            <div class="form-group col-1">
+              <input class="form-control" type="checkbox">
+            </div>
+            <%} else {%>
+              <div class="form-group col-1">
+                <input class="form-control" type="checkbox">
+              </div>
+              <div class="form-group col-1">
+                <input class="form-control" checked type="checkbox">
+              </div>
+            <%}%>
           </div>
-          <div class="form-group col-1">
-            <input class="form-control" type="checkbox">
-          </div>
-          <div class="form-group col-1">
-            <input class="form-control" checked type="checkbox">
-          </div>
-        </div>
-
-        <% }); %>
+  
+          <% } %>
 
         <div class="form-row">
           <div class="form-group col-12">
@@ -243,25 +271,40 @@
           </div>
         </div>
 
-        <% ['Amoxicilina',
-        'Cefalexina',
-        'Diclofenac',
-        'Dipirona',
-        'Ibuprofeno'].forEach(function(item){ %>
+        <%
+        let objs_2 = [
+          {item: 'Amoxicilina', val: data.amoxicilina},
+          {item: 'Cefalexina', val: data.cefalexina},
+          {item: 'Diclofenac', val: data.diclofenac},
+          {item: 'Dipirona', val: data.dipirona},
+          {item: 'Ibuprofeno', val: data.ibuprofeno}
+        ];
+        %>
 
-        <div class="form-row">
-          <div class="form-group col-6">
-            <label><%= item %></label>
+        <% for (const v of objs_2) {%>
+  
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label><%= v.item %></label>
+            </div>
+            <% if (v.val) {%>
+            <div class="form-group col-1">
+              <input class="form-control" checked type="checkbox">
+            </div>
+            <div class="form-group col-1">
+              <input class="form-control" type="checkbox">
+            </div>
+            <%} else {%>
+              <div class="form-group col-1">
+                <input class="form-control" type="checkbox">
+              </div>
+              <div class="form-group col-1">
+                <input class="form-control" checked type="checkbox">
+              </div>
+            <%}%>
           </div>
-          <div class="form-group col-1">
-            <input class="form-control" type="checkbox">
-          </div>
-          <div class="form-group col-1">
-            <input class="form-control" checked type="checkbox">
-          </div>
-        </div>
-
-        <% }); %>
+  
+        <% } %>
 
         <label>Alergia a algun alimento</label>
         <div class="form-row">
@@ -276,26 +319,41 @@
           </div>
         </div>
 
-        <% ['Pescado',
-        'Huevo'].forEach(function(item){ %>
+        <%
+        let objs_3= [
+          {item: 'Pescado', val: data.pescado},
+          {item: 'Huevo', val: data.huevo}
+        ];
+        %>
 
-        <div class="form-row">
-          <div class="form-group col-6">
-            <label><%= item %></label>
+        <% for (const v of objs_3) {%>
+  
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label><%= v.item %></label>
+            </div>
+            <% if (v.val) {%>
+            <div class="form-group col-1">
+              <input class="form-control" checked type="checkbox">
+            </div>
+            <div class="form-group col-1">
+              <input class="form-control" type="checkbox">
+            </div>
+            <%} else {%>
+              <div class="form-group col-1">
+                <input class="form-control" type="checkbox">
+              </div>
+              <div class="form-group col-1">
+                <input class="form-control" checked type="checkbox">
+              </div>
+            <%}%>
           </div>
-          <div class="form-group col-1">
-            <input class="form-control" type="checkbox">
-          </div>
-          <div class="form-group col-1">
-            <input class="form-control" checked type="checkbox">
-          </div>
-        </div>
-
-        <% }); %>
+  
+        <% } %>
 
         <div class="form-row">
           <div class="form-group col-12">
-            <label>Alergia a otro alimento</label>
+            <label>Alergia a otro alimento:</label>
             <label><b><%= data.alergiaAOtroAlimento %></b></label>
           </div>
         </div>
@@ -307,7 +365,7 @@
 
   <div class="page">
       <div class="card w-75 m-3">
-        <div class="card-header bg-primary text-white">
+        <div class="card-header bg-transparent border-success">
           Exámen Físico de la Boca
         </div>
     
