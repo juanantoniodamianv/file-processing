@@ -9,15 +9,11 @@ import {  MDBContainer,
 import axios from 'axios';
 import '../App.css';
 
-//const queryString = require('query-string');
-
-
 class FileUploads extends Component{
 
   constructor(props) {
     super(props);
-    //const parsed = queryString.parse(this.props.location.search);
-    //const { fullName, documentNumber, doctor, date } = parsed;
+
     this.state = {
       selectedFile: null,
       isLoaded: null,
