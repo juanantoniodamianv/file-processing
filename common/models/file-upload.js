@@ -50,10 +50,6 @@ module.exports = function(Fileupload) {
     cuitMedicoAnestesista = cuitMedicoAnestesista.split(' ');
     cuitMedicoAnestesista = cuitMedicoAnestesista[cuitMedicoAnestesista.length - 1];
 
-    /* 2020-12-06 to 06-12-2020 */
-    //fechaDeConsulta = fechaDeConsulta.split('-').map(e => (e.length === 1) ? `0${e}` : e).reverse().join('-');
-    //fechaDeConsulta = fechaDeConsulta.replace(/-/g,'/')
-
     let patientHeaderData = await PatientHeaderData.create({
       fechaDeConsulta, numeroDeDocumento, cuitMedicoAnestesista
     })
