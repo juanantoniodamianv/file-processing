@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
-import { MDBContainer, MDBCol, MDBRow } from "mdbreact";
+import {  MDBContainer, 
+          MDBCol, 
+          MDBRow, 
+          MDBCard,
+          MDBCardBody,
+          MDBCardText,
+          MDBCardFooter } from "mdbreact";
 import axios from 'axios';
+import '../App.css';
 
 //const queryString = require('query-string');
 
@@ -41,22 +48,25 @@ class FileUploads extends Component{
   onChangeHandler = event => {
     var files = event.target.files;
     if (this.maxSelectFile(event) && this.checkMimeType(event)) {
+      let filesList = document.getElementById('filesList');
+      
+      filesList.innerHTML = '';
+      for (const file of files) {
+        filesList.innerHTML += `<li>${file.name}</li>`;
+      }
+
       this.setState({
-        selectedFile: files,
-        loaded: 0
+        selectedFile: files
       })
 
       switch (files.length) {
         case 1:
-          document.getElementById('fileNamePlaceholder').innerText = files[0].name;
           document.getElementById('submitButton').disabled = false;
           break;
         case 0:
-          document.getElementById('fileNamePlaceholder').innerText = '';
           document.getElementById('submitButton').disabled = true;
           break;
         default:
-          document.getElementById('fileNamePlaceholder').innerText = `${files.length} imágenes seleccionadas`;
           document.getElementById('submitButton').disabled = false;
           break;
       }
@@ -89,10 +99,11 @@ class FileUploads extends Component{
 
   maxSelectFile = (event) => {
     let files = event.target.files;
-    if (files.length > 5) {
-      const msg = 'Solo puede subir 5 imágenes';
+    if (files.length > 10) {
+      const msg = 'Solo puede subir 10 imágenes';
       event.target.value = null;
       console.log(msg);
+      this.formatNotValidAlert(msg);
       return false;
     }
     return true;
@@ -101,7 +112,7 @@ class FileUploads extends Component{
   checkMimeType = (event) => {
     let files = event.target.files;
     let err = '';
-    const types = ['image/png', 'image/jpeg'];
+    const types = ['image/png', 'image/jpeg', 'image/jpg'];
     for (let x = 0; x < files.length; x++) {
       if (types.every(type => files[x].type !== type)) {
         err += `${files[x].type} no es un formato válido.`;
@@ -110,10 +121,19 @@ class FileUploads extends Component{
     if (err !== '') {
       event.target.value = null;
       console.log(err);
+      this.formatNotValidAlert("El formato de imágen no es válido. Formatos válidos (png, jpg, jpeg)");
       return false;
     }
     return true;
   }
+
+  formatNotValidAlert = (msg) => {
+    let alert = document.querySelector(".mdbAlert")
+    alert.children[0].innerHTML = msg;
+    alert.classList.remove('d-none');
+    setTimeout(() => { alert.classList.add('d-none') }, 4000);
+  }
+ 
 
   render(){
     const { error, isLoaded, submitResponse } = this.state;
@@ -160,28 +180,22 @@ class FileUploads extends Component{
                 </label>
                 <input type="text" id="defaultFormRegister4" name="date" className="form-control" defaultValue={this.state.date} disabled/>
                 <br />
-                
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <span className="input-group-text" id="inputGroupFileAddon01">
-                      Añadir archivo
-                    </span>
-                  </div>
-                  <div className="custom-file">
-                    <input
-                      type="file"
-                      name="file"
-                      className="custom-file-input"
-                      id="inputGroupFile01"
-                      aria-describedby="inputGroupFileAddon01"
-                      multiple
-                      onChange={this.onChangeHandler}
-                      required
-                    />
-                    <label className="custom-file-label" id="fileNamePlaceholder" htmlFor="inputGroupFile01">
-                    </label>
-                  </div>
-                </div>
+
+                <MDBCard>
+                  <MDBCardBody>
+                    <MDBCardText>
+                      {/* <button type="button" className="btn btn-secondary">Agregar imágen</button> */}
+                      <label className="inputFileLabel">
+			                  <input type="file" onChange={this.onChangeHandler} multiple />Cargar imágenes
+                      </label>
+		                  <ul id="filesList"></ul>
+                    </MDBCardText>
+                  </MDBCardBody>
+                  <MDBCardFooter small muted id="footerUploads">
+                    Únicamente PNG, JPG y JPEG.<br />
+                    Máximo 10 imágenes
+                  </MDBCardFooter>
+                </MDBCard>
                 <br />
                 
                 <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler} id="submitButton">Subir Imágenes</button> 

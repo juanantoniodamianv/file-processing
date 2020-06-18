@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import '../../App.css';
 import {Table} from "./Table";
-import { MDBAlert } from "mdbreact";
 
 class PatientsTable extends Component{
   render(){
@@ -12,9 +11,6 @@ class PatientsTable extends Component{
           <div className="card-body">
             <Table />
           </div>
-          <MDBAlert color="success" className="d-none mdbAlert">
-            <span>Alert</span>
-          </MDBAlert>
         </div>
       </div>
     )
