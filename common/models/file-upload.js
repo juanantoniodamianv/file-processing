@@ -15,9 +15,8 @@ module.exports = function(Fileupload) {
     form.parse(req, (err, fields, files) => {
       if (err) reject(err);
       const file = files['file'];
-      /* if (!file) reject('File was not found in form data.');
-      else resolve(file); */
-      resolve(file);
+      if (!file) reject('File was not found in form data.');
+      else resolve(file);
     });
   });
 
@@ -54,7 +53,7 @@ module.exports = function(Fileupload) {
     let patientHeaderData = await PatientHeaderData.create({
       fechaDeConsulta, numeroDeDocumento, cuitMedicoAnestesista
     })
-
+    console.log(req)
     const files = await getFileFromRequest(req);
     let fileUploads = []
     

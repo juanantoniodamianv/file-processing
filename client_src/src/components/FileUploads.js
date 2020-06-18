@@ -180,7 +180,6 @@ class FileUploads extends Component{
                 <MDBCard>
                   <MDBCardBody>
                     <MDBCardText>
-                      {/* <button type="button" className="btn btn-secondary">Agregar imágen</button> */}
                       <label className="inputFileLabel">
 			                  <input type="file" onChange={this.onChangeHandler} multiple />Cargar imágenes
                       </label>
