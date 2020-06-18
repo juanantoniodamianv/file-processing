@@ -14,7 +14,7 @@ module.exports = function(Fileupload) {
     const form = new multiparty.Form();
     form.parse(req, (err, fields, files) => {
       if (err) reject(err);
-      const file = files['file'][0];
+      const file = files['file'];
       if (!file) reject('File was not found in form data.');
       else resolve(file);
     });
@@ -52,15 +52,16 @@ module.exports = function(Fileupload) {
 
     /* 2020-12-06 to 06-12-2020 */
     //fechaDeConsulta = fechaDeConsulta.split('-').map(e => (e.length === 1) ? `0${e}` : e).reverse().join('-');
-    fechaDeConsulta = fechaDeConsulta.replace(/-/g,'/')
+    //fechaDeConsulta = fechaDeConsulta.replace(/-/g,'/')
 
     let patientHeaderData = await PatientHeaderData.create({
       fechaDeConsulta, numeroDeDocumento, cuitMedicoAnestesista
     })
 
-    const file = await getFileFromRequest(req);
+    const files = await getFileFromRequest(req);
+    let fileUploads = []
     
-    //for (const file of files) {
+    for (const file of files) {
       let { Location, ETag, Bucket, Key } = await uploadFileToS3(file, {}, `${numeroDeDocumento}/images`);
       let fileUpload = await Fileupload.create({
         link: Location,
@@ -73,9 +74,11 @@ module.exports = function(Fileupload) {
         patientHeaderDataId: patientHeaderData.id,
         fileUploadId: fileUpload.id
       })
-    //}
 
-    return fileUpload;
+      fileUploads.push(fileUpload);
+    }
+
+    return fileUploads;
   };
 
   Fileupload.remoteMethod('uploadPatientImage', {

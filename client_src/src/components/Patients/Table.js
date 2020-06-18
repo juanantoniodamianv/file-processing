@@ -130,7 +130,7 @@ export class Table extends Component {
 
   getRegisters = async () => {
     try {
-      let items = await axios.get('http://localhost:3000/api/Spreadsheets')
+      let items = await axios.get('api/Spreadsheets')
       this.setState({ 
         isLoaded: true,
         items: items.data.response

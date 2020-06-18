@@ -7,7 +7,7 @@ const Main = () => (
   <main>
     <Switch>
       <Route exact path='/' component={PatientsTable}  />
-      <Route exact path='/fileUploads' component={FileUploads}  />
+      <Route exact path='/file-uploads' component={FileUploads}  />
     </Switch>
   </main>
 )

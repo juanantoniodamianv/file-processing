@@ -1,6 +1,9 @@
 'use strict';
 require('dotenv').config();
 
+const path = require('path');
+const publicPath = path.join(__dirname, '..', 'client');
+
 var loopback = require('loopback');
 var boot = require('loopback-boot');
 
@@ -11,6 +14,14 @@ app.start = function() {
   return app.listen(function() {
     app.emit('started');
     var baseUrl = app.get('url').replace(/\/$/, '');
+
+    app.get('/file-uploads', (req, res) => {
+      res.sendFile(path.join(publicPath, 'index.html'), function(err) {
+        if (err) res.status(500).send(err)
+      })
+    })
+
+    
     console.log('Web server listening at: %s', baseUrl);
     if (app.get('loopback-component-explorer')) {
       var explorerPath = app.get('loopback-component-explorer').mountPath;
