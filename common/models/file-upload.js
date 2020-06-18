@@ -15,8 +15,9 @@ module.exports = function(Fileupload) {
     form.parse(req, (err, fields, files) => {
       if (err) reject(err);
       const file = files['file'];
-      if (!file) reject('File was not found in form data.');
-      else resolve(file);
+      /* if (!file) reject('File was not found in form data.');
+      else resolve(file); */
+      resolve(file);
     });
   });
 
