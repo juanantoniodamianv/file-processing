@@ -84,7 +84,13 @@ class FileUploads extends Component{
     fetch(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, {
       mode: 'no-cors',
       method: "POST",
-      body: data
+      body: data,
+      headers: {
+        "Enctype": "multipart/form-data",
+        "Content-Disposition": "file",
+        "Content-Transfer-Encoding": "binary",
+        "type": "formData"
+      }
     }).then(function (res) {
       if (res.ok) {
         alert("Perfect! ");
