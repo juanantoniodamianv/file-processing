@@ -80,8 +80,21 @@ class FileUploads extends Component{
     for (var x = 0; x < this.state.selectedFile.length; x++) {
       data.append('file', this.state.selectedFile[x]);
     }
-    const config = { headers: { 'Enctype': 'multipart/form-data', 'Content-Type': '' } };
-    let response = await axios.post(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, config);
+    
+    axios.post(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, {})
+    .then((resp) => {
+      if (resp.status === 200) {
+        this.setState({
+          submitResponse: true
+        })
+      } else {
+        this.setState({
+          submitResponse: false
+        })
+      }
+    })
+    
+    /* let response = await axios.post(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, config);
     if (response.status === 200) {
       this.setState({
         submitResponse: true
@@ -90,7 +103,7 @@ class FileUploads extends Component{
       this.setState({
         submitResponse: false
       })
-    }
+    } */
   }
 
   maxSelectFile = (event) => {
