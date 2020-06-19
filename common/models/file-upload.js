@@ -14,7 +14,7 @@ module.exports = function(Fileupload) {
     const form = new multiparty.Form();
     form.parse(req, (err, fields, files) => {
       if (err) reject(err);
-      const file = files['file'];
+      const file = files['file'][0];
       if (!file) reject('File was not found in form data.');
       else resolve(file);
     });
@@ -54,10 +54,10 @@ module.exports = function(Fileupload) {
       fechaDeConsulta, numeroDeDocumento, cuitMedicoAnestesista
     })
 
-    const files = await getFileFromRequest(req);
+    const file = await getFileFromRequest(req);
     let fileUploads = []
     
-    for (const file of files) {
+    //for (const file of files) {
       let { Location, ETag, Bucket, Key } = await uploadFileToS3(file, {}, `${numeroDeDocumento}/images`);
       let fileUpload = await Fileupload.create({
         link: Location,
@@ -72,7 +72,7 @@ module.exports = function(Fileupload) {
       })
 
       fileUploads.push(fileUpload);
-    }
+    //}
 
     return fileUploads;
   };
