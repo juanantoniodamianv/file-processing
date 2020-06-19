@@ -31,7 +31,7 @@ class FileUploads extends Component{
   }
 
   getLastRecordOnSpreadsheets = async () => {
-    let lastRecord = await axios.get('api/Spreadsheets/getLastRegister');
+    let lastRecord = await axios.get('http://localhost:3000/api/Spreadsheets/getLastRegister');
     this.setState({
       isLoaded: true,
       fullName: lastRecord.data.response.apellido_y_nombre,
@@ -44,18 +44,25 @@ class FileUploads extends Component{
   onChangeHandler = event => {
     var files = event.target.files;
     if (this.maxSelectFile(event) && this.checkMimeType(event)) {
-      let filesList = document.getElementById('filesList');
+      if (!this.state.selectedFile) {
+        this.setState({
+          selectedFile: files
+        })
+      } else {
+        this.setState({selectedFile: [ ...this.state.selectedFile, ...files]});
+      }
       
-      filesList.innerHTML = '';
+      let filesList = document.getElementById('filesList');
+      //filesList.innerHTML = '';
       for (const file of files) {
-        filesList.innerHTML += `<li>${file.name}</li>`;
+        filesList.innerHTML += `<li>${file.name} <button class="btn btn-small">eliminar</button></li>`;
       }
 
-      this.setState({
+/*       this.setState({
         selectedFile: files
-      })
+      }) */
 
-      switch (files.length) {
+/*       switch (files.length) {
         case 1:
           document.getElementById('submitButton').disabled = false;
           break;
@@ -65,7 +72,7 @@ class FileUploads extends Component{
         default:
           document.getElementById('submitButton').disabled = false;
           break;
-      }
+      } */
 
     }
   }
@@ -86,7 +93,7 @@ class FileUploads extends Component{
       data.append('file', this.state.selectedFile[x]);
     }
     
-    let response = await axios.post(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, {});
+    let response = await axios.post(`http://localhost:3000/api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, {});
     if (response.status === 200) {
       this.setState({
         submitResponse: true
@@ -160,7 +167,8 @@ class FileUploads extends Component{
           <MDBRow>
             <MDBCol md="6">
               <form method="post" action="#">
-                <p className="h4 text-center mb-4">Adjuntar Imágenes en Ficha Pacientes </p>
+                <p className="h4 text-center mt-4">Adjuntar Estudios En Ficha Pacientes </p>
+                <p className="h6 text-center mb-4">Aqui debe adjuntar los estudios de su último laboratorio (que contenga hemograma y coagulograma) y electrocardiograma completo con valoración.</p>
                 <label htmlFor="defaultFormRegister1" className="grey-text">
                   Apellido y nombre
                 </label>
@@ -186,19 +194,19 @@ class FileUploads extends Component{
                   <MDBCardBody>
                     <MDBCardText>
                       <label className="inputFileLabel">
-			                  <input type="file" name="file" onChange={this.onChangeHandler} multiple />Cargar imágenes
+			                  <input type="file" name="file" onChange={this.onChangeHandler} multiple />Cargar estudios
                       </label>
 		                  <ul id="filesList"></ul>
                     </MDBCardText>
                   </MDBCardBody>
                   <MDBCardFooter small muted id="footerUploads">
-                    Únicamente PNG, JPG y JPEG.<br />
+                    Únicamente imágenes (PNG, JPG y JPEG)<br />
                     Máximo 10 imágenes
                   </MDBCardFooter>
                 </MDBCard>
                 <br />
                 
-                <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler} id="submitButton">Subir Imágenes</button> 
+                <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler} id="submitButton">Subir estudios</button> 
               </form>
             </MDBCol>
           </MDBRow>

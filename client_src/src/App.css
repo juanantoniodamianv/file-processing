@@ -88,3 +88,13 @@ div.container {
   width: 100%;
   padding: 0 2rem;
 }
+
+.overflow {
+  width: 10em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.ellipsis { 
+  text-overflow: ellipsis; 
+}

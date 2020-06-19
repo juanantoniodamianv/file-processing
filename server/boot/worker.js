@@ -75,7 +75,7 @@ module.exports = function(app) {
   
 
   /* Generar PDF segun el modelo PatientForm */
-  /* fileProcessorPdfFiles.process(async (job, done) => {
+  fileProcessorPdfFiles.process(async (job, done) => {
     console.log(chalk.cyan(`\n[Bull] Launched: ${Date(Date.now()).toString()}`));
     console.log(chalk.cyan('[Bull] Generating pdf files'));
     try {
@@ -92,5 +92,5 @@ module.exports = function(app) {
       every: 1000,
       limit: 1
     }
-  }); */ 
+  });
 }
