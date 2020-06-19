@@ -71,8 +71,13 @@ class FileUploads extends Component{
   }
 
   onClickHandler = async () => {
+    if (!this.state.selectedFile || !this.state.selectedFile.length) {
+      this.formatNotValidAlert("Debe seleccionar al menos una imágen.");
+      return;
+    }
+
     let submitButton = document.getElementById("submitButton");
-    submitButton.disabled = true;
+    submitButton.disabled = true;this.formatNotValidAlert("Debe seleccionar al menos una imágen.")
     submitButton.innerHTML = `Cargando imágenes <div class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div>`;
     
     const data = new FormData();
@@ -80,7 +85,6 @@ class FileUploads extends Component{
     for (var x = 0; x < this.state.selectedFile.length; x++) {
       data.append('file', this.state.selectedFile[x]);
     }
-    
     
     let response = await axios.post(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, {});
     if (response.status === 200) {
