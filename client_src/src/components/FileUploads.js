@@ -80,8 +80,9 @@ class FileUploads extends Component{
     for (var x = 0; x < this.state.selectedFile.length; x++) {
       data.append('file', this.state.selectedFile[x]);
     }
-
-    let response = await axios.post(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data);
+    
+    let config = { headers: { 'enctype': 'multipart/form-data', 'Content-Type': '' } }
+    let response = await axios.post(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, config);
     if (response.status === 200) {
       this.setState({
         submitResponse: true

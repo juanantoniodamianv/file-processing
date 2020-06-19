@@ -53,7 +53,7 @@ module.exports = function(Fileupload) {
     let patientHeaderData = await PatientHeaderData.create({
       fechaDeConsulta, numeroDeDocumento, cuitMedicoAnestesista
     })
-    console.log(req)
+
     const files = await getFileFromRequest(req);
     let fileUploads = []
     
