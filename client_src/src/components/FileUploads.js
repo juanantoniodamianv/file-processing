@@ -80,33 +80,9 @@ class FileUploads extends Component{
     for (var x = 0; x < this.state.selectedFile.length; x++) {
       data.append('file', this.state.selectedFile[x]);
     }
-
-    fetch(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, {
-      mode: 'no-cors',
-      method: "POST",
-      body: data,
-      headers: {
-        "Enctype": "multipart/form-data",
-        "Content-Disposition": "file",
-        "Content-Transfer-Encoding": "binary",
-        "type": "formData"
-      }
-    }).then(function (res) {
-      if (res.ok) {
-        alert("Perfect! ");
-      } else if (res.status == 401) {
-        alert("Oops! ");
-      }
-    }, function (e) {
-      alert("Error submitting form!");
-    });
-
     
-    /* const headers = {
-      'enctype': 'multipart/form-data',
-      'content-type': ''
-    }
-    let response = await axios.post(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, {headers});
+    
+    let response = await axios.post(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, {});
     if (response.status === 200) {
       this.setState({
         submitResponse: true
@@ -115,7 +91,7 @@ class FileUploads extends Component{
       this.setState({
         submitResponse: false
       })
-    } */
+    }
   }
 
   maxSelectFile = (event) => {
