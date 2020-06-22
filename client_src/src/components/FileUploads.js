@@ -8,6 +8,7 @@ import {  MDBContainer,
           MDBCardFooter } from "mdbreact";
 import axios from 'axios';
 import '../App.css';
+import FileElement from './Files/FileElement';
 
 class FileUploads extends Component{
 
@@ -31,7 +32,7 @@ class FileUploads extends Component{
   }
 
   getLastRecordOnSpreadsheets = async () => {
-    let lastRecord = await axios.get('http://localhost:3000/api/Spreadsheets/getLastRegister');
+    let lastRecord = await axios.get('api/Spreadsheets/getLastRegister');
     this.setState({
       isLoaded: true,
       fullName: lastRecord.data.response.apellido_y_nombre,
@@ -51,30 +52,14 @@ class FileUploads extends Component{
       } else {
         this.setState({selectedFile: [ ...this.state.selectedFile, ...files]});
       }
-      
-      let filesList = document.getElementById('filesList');
-      //filesList.innerHTML = '';
-      for (const file of files) {
-        filesList.innerHTML += `<li>${file.name} <button class="btn btn-small">eliminar</button></li>`;
-      }
-
-/*       this.setState({
-        selectedFile: files
-      }) */
-
-/*       switch (files.length) {
-        case 1:
-          document.getElementById('submitButton').disabled = false;
-          break;
-        case 0:
-          document.getElementById('submitButton').disabled = true;
-          break;
-        default:
-          document.getElementById('submitButton').disabled = false;
-          break;
-      } */
-
     }
+  }
+
+  deleteFile = (fileName) => {
+    const filteredFileList = [...this.state.selectedFile].filter(file => file.name !== fileName)
+    this.setState({
+      selectedFile: filteredFileList
+    });
   }
 
   onClickHandler = async () => {
@@ -93,7 +78,7 @@ class FileUploads extends Component{
       data.append('file', this.state.selectedFile[x]);
     }
     
-    let response = await axios.post(`http://localhost:3000/api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, {});
+    let response = await axios.post(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, {});
     if (response.status === 200) {
       this.setState({
         submitResponse: true
@@ -144,7 +129,7 @@ class FileUploads extends Component{
  
 
   render(){
-    const { error, isLoaded, submitResponse } = this.state;
+    let { error, isLoaded, submitResponse, selectedFile } = this.state;
     if (error) {
       return <div>Error: {error.message}</div>;
     } else if (!isLoaded) {
@@ -196,7 +181,11 @@ class FileUploads extends Component{
                       <label className="inputFileLabel">
 			                  <input type="file" name="file" onChange={this.onChangeHandler} multiple />Cargar estudios
                       </label>
-		                  <ul id="filesList"></ul>
+		                  <ul id="filesList">
+                        {selectedFile &&  Array.from(selectedFile).map(file => {
+                          return <FileElement fileName={file.name} onClick={this.deleteFile.bind(this, file.name)}/>
+                        })}
+                      </ul>
                     </MDBCardText>
                   </MDBCardBody>
                   <MDBCardFooter small muted id="footerUploads">

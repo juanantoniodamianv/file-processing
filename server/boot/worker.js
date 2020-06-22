@@ -15,20 +15,6 @@ const generatePatientPdf = require('../lib/generatePatientPdf');
 module.exports = function(app) {
   if (!app.isBoot) return;
 
-  const PatientForm = app.models.PatientForm;
-
-  fileProcessor.process(async (job, done) => {
-    console.log(chalk.cyan(`\n[Bull] Launched: ${Date(Date.now()).toString()}`));
-    console.log(chalk.cyan('[Bull] Populating spreadsheets to mongodb'));
-    try {
-      populatePatientForm(PatientForm);
-    } catch(err) {
-      console.log(chalk.red(new Error(`[Bull error]: ${err}`)));
-    }
-
-    done();
-  });
-
   /* ----------------------------------------------------------------------------------------
   const Metric = app.models.Metric;
 
@@ -65,17 +51,31 @@ module.exports = function(app) {
   } 
     
 ----------------------------------------------------------------------------------------*/
+/* 
+  const PatientForm = app.models.PatientForm;
+
+  fileProcessor.process(async (job, done) => {
+    console.log(chalk.cyan(`\n[Bull] Launched: ${Date(Date.now()).toString()}`));
+    console.log(chalk.cyan('[Bull] Populating spreadsheets to mongodb'));
+    try {
+      populatePatientForm(PatientForm);
+    } catch(err) {
+      console.log(chalk.red(new Error(`[Bull error]: ${err}`)));
+    }
+
+    done();
+  });
 
   fileProcessor.add({ foo: 'bar' },{
     repeat: {
       every: 1000,
       limit: 1
     }
-  });
+  }); */
   
 
   /* Generar PDF segun el modelo PatientForm */
-  fileProcessorPdfFiles.process(async (job, done) => {
+  /* fileProcessorPdfFiles.process(async (job, done) => {
     console.log(chalk.cyan(`\n[Bull] Launched: ${Date(Date.now()).toString()}`));
     console.log(chalk.cyan('[Bull] Generating pdf files'));
     try {
@@ -92,5 +92,5 @@ module.exports = function(app) {
       every: 1000,
       limit: 1
     }
-  });
+  }); */
 }
