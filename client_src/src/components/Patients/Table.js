@@ -1,10 +1,13 @@
 import React, {Component} from 'react';
+import ReactDOM from 'react-dom';
 import { MDBBtn, MDBIcon } from "mdbreact";
 import axios from 'axios';
 import $ from 'jquery';
 
 import 'datatables.net'
 import 'datatables.net-responsive'
+
+import ImagesModal from '../utils/ImagesModal';
 
 const columns = [
   { 
@@ -76,7 +79,8 @@ export class Table extends Component {
         numero_de_afiliado, 
         medico_anestesista, 
         ` ${this.linkActions(form_response_edit_url, 'Formulario Paciente')}
-          ${this.linkActions(form_response_edit_url_m, 'Formulario Medico', {fecha_de_consulta, apellido_y_nombre, numero_de_documento, medico_anestesista})}`]
+          ${this.linkActions(form_response_edit_url_m, 'Formulario Medico', {fecha_de_consulta, apellido_y_nombre, numero_de_documento, medico_anestesista})}
+          ${this.linkActionsGetImage('Ver estudios', {numero_de_documento})}`]
     )
     this.$el = $(this.el)
     this.$el.DataTable({
@@ -114,6 +118,13 @@ export class Table extends Component {
     })
   }
 
+  linkActionsGetImage = (title = 'button', attr = null) => {
+    /* if (!attr) return `<a href="#" class="btn btn-sm btn-primary btn-block mb-1" target="_blank">${title}</a>`;
+    let element = React.createElement('button', null, 'Ver estudios');
+    return ReactDOM.render(element, document.getElementById('root')); */
+    return
+  }
+
   linkActions = (url, title, attr = null) => {
     if (url) {
       return `<a href="${url}" class="btn btn-sm btn-primary btn-block mb-1" target="_blank">${title}</a>`;
@@ -130,7 +141,7 @@ export class Table extends Component {
 
   getRegisters = async () => {
     try {
-      let items = await axios.get('api/Spreadsheets')
+      let items = await axios.get('http://localhost:3000/api/Spreadsheets')
       this.setState({ 
         isLoaded: true,
         items: items.data.response
@@ -156,6 +167,14 @@ export class Table extends Component {
     el.title = "Copiar en el portapapeles la url del formulario para enviar al paciente";
   }
 
+  modalRef = ({handleShow}) => {
+    this.showModal = handleShow;
+  }
+ 
+  openModal = () => {
+   this.showModal();
+  }
+
   render() {
     const { error, isLoaded } = this.state;
     if (error) {
@@ -178,6 +197,8 @@ export class Table extends Component {
 
           </div>
           <table data-order='[[ 0, "desc" ]]' className="table table-striped table-bordered dt-responsive nowrap" style={{width:'100%'}} ref={ el => this.el= el }></table>
+          {/* <ImagesModal ref={this.modalRef}/>
+          <MDBBtn onClick={this.openModal}>Login</MDBBtn> */}
         </div>
       );
     }

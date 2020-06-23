@@ -4,7 +4,7 @@ const { join, extname } = require('path');
 const { readFileSync } = require('fs');
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3({ accessKeyId: process.env.AWS_KEY_ID, secretAccessKey: process.env.AWS_KEY });
-
+const awsS3UrlDefault = "https://forms-example.s3.us-east-2.amazonaws.com/";
 module.exports = function(Fileupload) {
 
   /**
@@ -87,6 +87,33 @@ module.exports = function(Fileupload) {
     ],
     returns: { root: true, type: 'object' },
     http: { path: '/file-upload', verb: 'post' }
+  });
+
+  Fileupload.getFiles = async (documentNumber) => {
+    let params = {
+      Bucket: "forms-example", 
+      MaxKeys: 20,
+      Prefix: `${documentNumber}/images`
+    };
+
+    return new Promise((resolve, reject) => {
+      return s3.listObjectsV2(params, (err, data) => {
+        if (err) console.log(err, err.stack);
+        let files = [];
+        for (const file of data.Contents) {
+          files.push({'url': awsS3UrlDefault + file.Key}); 
+        }
+        return resolve(files);
+      })
+    })
+  };
+
+  Fileupload.remoteMethod('getFiles', {
+    accepts: [
+      { arg: 'documentNumber', type: 'string', required: true, http: { source: 'query' } }
+    ],
+    returns: { root: true, type: 'array' },
+    http: { path: '/get-files', verb: 'get' }
   });
 
 };
