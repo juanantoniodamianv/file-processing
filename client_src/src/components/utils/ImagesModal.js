@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
+import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBRow, MDBCol } from 'mdbreact';
 
 class ImagesModal extends Component {
   constructor(props, context){
@@ -7,25 +7,43 @@ class ImagesModal extends Component {
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
     this.state = {
-        show: false
+        show: false,
+        fileUrls: {}
     }
   }
 
-  handleShow() {
-      this.setState({ show: true })
+  handleShow(fileUrls) {
+      this.setState({ 
+        show: true,
+        fileUrls 
+      })
   }
 
   handleClose(){
-      this.setState({ show: false })
+      this.setState({ 
+        show: false,
+        fileUrls: {}
+      })
   }
 
   render() {
     return (
       <MDBContainer>
-        <MDBModal isOpen={this.state.show} fullHeight position="bottom">
+        <MDBModal isOpen={this.state.show} size="lg" position="bottom">
           <MDBModalHeader>Estudios adjuntos</MDBModalHeader>
           <MDBModalBody>
-            
+            {this.state.fileUrls.length ? this.state.fileUrls.map(file => {
+              return (
+                <MDBRow className="mb-4">
+                  <MDBCol md="12">
+                    <img src={file.url} className="img-fluid" alt="" />
+                  </MDBCol>
+                </MDBRow>
+              )
+            })
+            : <p>El paciente no ha cargado ningun estudio</p>
+            }
+
           </MDBModalBody>
           <MDBModalFooter>
             <MDBBtn color="secondary" onClick={this.handleClose}>Cerrar</MDBBtn>

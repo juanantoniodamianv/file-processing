@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import { MDBBtn, MDBIcon } from "mdbreact";
 import axios from 'axios';
 import $ from 'jquery';
@@ -80,7 +79,7 @@ export class Table extends Component {
         medico_anestesista, 
         ` ${this.linkActions(form_response_edit_url, 'Formulario Paciente')}
           ${this.linkActions(form_response_edit_url_m, 'Formulario Medico', {fecha_de_consulta, apellido_y_nombre, numero_de_documento, medico_anestesista})}
-          ${this.linkActionsGetImage('Ver estudios', {numero_de_documento})}`]
+          ${this.linkActionsGetImage(numero_de_documento)}`]
     )
     this.$el = $(this.el)
     this.$el.DataTable({
@@ -116,13 +115,17 @@ export class Table extends Component {
       }
 
     })
+    let elements = document.getElementsByClassName("verEstudiosBtn");
+    Array.from(elements).forEach((element) => {
+      element.addEventListener('click', (event) => {
+        event.preventDefault();
+        this.openModal(element.getAttribute("data-document"));
+      });
+    }) 
   }
 
-  linkActionsGetImage = (title = 'button', attr = null) => {
-    /* if (!attr) return `<a href="#" class="btn btn-sm btn-primary btn-block mb-1" target="_blank">${title}</a>`;
-    let element = React.createElement('button', null, 'Ver estudios');
-    return ReactDOM.render(element, document.getElementById('root')); */
-    return
+  linkActionsGetImage = (attr) => {
+    return `<a data-document="${attr}" class="verEstudiosBtn btn btn-sm btn-primary btn-block mb-1" target="_blank">Ver estudios</a>`;
   }
 
   linkActions = (url, title, attr = null) => {
@@ -141,7 +144,7 @@ export class Table extends Component {
 
   getRegisters = async () => {
     try {
-      let items = await axios.get('http://localhost:3000/api/Spreadsheets')
+      let items = await axios.get('api/Spreadsheets')
       this.setState({ 
         isLoaded: true,
         items: items.data.response
@@ -171,8 +174,9 @@ export class Table extends Component {
     this.showModal = handleShow;
   }
  
-  openModal = () => {
-   this.showModal();
+  openModal = async (documentNumber) => {
+    let fileUrls = await axios.get(`api/FileUploads/get-files?documentNumber=${documentNumber}`);
+    this.showModal(fileUrls.data);
   }
 
   render() {
@@ -197,8 +201,7 @@ export class Table extends Component {
 
           </div>
           <table data-order='[[ 0, "desc" ]]' className="table table-striped table-bordered dt-responsive nowrap" style={{width:'100%'}} ref={ el => this.el= el }></table>
-          {/* <ImagesModal ref={this.modalRef}/>
-          <MDBBtn onClick={this.openModal}>Login</MDBBtn> */}
+          <ImagesModal ref={this.modalRef}/>
         </div>
       );
     }

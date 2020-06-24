@@ -33,7 +33,7 @@ class FileUploads extends Component{
   }
 
   getLastRecordOnSpreadsheets = async () => {
-    let lastRecord = await axios.get('http://localhost:3000/api/Spreadsheets/getLastRegister');
+    let lastRecord = await axios.get('api/Spreadsheets/getLastRegister');
     this.setState({
       isLoaded: true,
       fullName: lastRecord.data.response.apellido_y_nombre,
@@ -70,7 +70,7 @@ class FileUploads extends Component{
     }
 
     let submitButton = document.getElementById("submitButton");
-    submitButton.disabled = true;this.formatNotValidAlert("Debe seleccionar al menos una imágen.")
+    submitButton.disabled = true;
     submitButton.innerHTML = `Cargando imágenes <div class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div>`;
     
     const data = new FormData();
@@ -79,7 +79,7 @@ class FileUploads extends Component{
       data.append('file', this.state.selectedFile[x]);
     }
     
-    let response = await axios.post(`http://localhost:3000/api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, {});
+    let response = await axios.post(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, {});
     if (response.status === 200) {
       this.setState({
         submitResponse: true
