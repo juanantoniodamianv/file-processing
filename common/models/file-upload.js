@@ -5,8 +5,12 @@ const { readFileSync } = require('fs');
 const AWS = require('aws-sdk');
 const s3 = new AWS.S3({ accessKeyId: process.env.AWS_KEY_ID, secretAccessKey: process.env.AWS_KEY });
 const awsS3UrlDefault = "https://forms-example.s3.us-east-2.amazonaws.com/";
-module.exports = function(Fileupload) {
+const moment = require('moment');
 
+const populatePatientForm = require('../../server/lib/populatePatientForm');
+const generatePatientPdf = require('../../server/lib/generatePatientPdf');
+
+module.exports = function(Fileupload) {
   /**
   * Helper method which takes the request object and returns a promise with a file.
   */
@@ -114,6 +118,28 @@ module.exports = function(Fileupload) {
     ],
     returns: { root: true, type: 'array' },
     http: { path: '/get-files', verb: 'get' }
+  });
+
+  Fileupload.getPatientFiles = async () => {
+
+    const PatientForm = Fileupload.app.models.PatientForm;
+
+    return new Promise((resolve, reject) => {
+      return populatePatientForm(PatientForm).then(() => {
+        generatePatientPdf(PatientForm).then(files => {
+          console.log(files)
+          resolve(files);
+        })
+      })
+    })
+  }
+
+  Fileupload.remoteMethod('getPatientFiles', {
+    /* accepts: [
+      { arg: 'date', type: 'string', required: true, http: { source: 'query' } }
+    ], */
+    returns: { root: true, type: 'array' },
+    http: { path: '/get-patient-files', verb: 'get' }
   });
 
 };

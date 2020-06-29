@@ -45,7 +45,7 @@ class FileUploads extends Component{
 
   onChangeHandler = event => {
     var files = event.target.files;
-    if (this.maxSelectFile(event) && this.checkMimeType(event)) {
+    if (this.maxSelectFile(event) && this.checkMimeType(event) && this.maxFileSize(event)) {
       if (!this.state.selectedFile) {
         this.setState({
           selectedFile: files
@@ -121,6 +121,24 @@ class FileUploads extends Component{
     return true;
   }
 
+  maxFileSize = (event) => {
+    let files = event.target.files;
+    let err = '';
+    let maxSize = 5000000;
+    for (let x = 0; x < files.length; x++) {
+      if (files[x].size > maxSize) {
+        err += `${files[x].name} excede el tamaño permitido (5MB por archivo).`;
+      }
+    }
+    if (err !== '') {
+      event.target.value = null;
+      console.log(err);
+      this.formatNotValidAlert("El tamaño maximo permitido es de 5MB por imágen.");
+      return false;
+    }
+    return true;
+  }
+
   formatNotValidAlert = (msg) => {
     let alert = document.querySelector(".mdbAlert")
     alert.children[0].innerHTML = msg;
@@ -128,7 +146,6 @@ class FileUploads extends Component{
     setTimeout(() => { alert.classList.add('d-none') }, 4000);
   }
  
-
   render(){
     let { error, isLoaded, submitResponse, selectedFile } = this.state;
     if (error) {
@@ -191,7 +208,8 @@ class FileUploads extends Component{
                   </MDBCardBody>
                   <MDBCardFooter small muted id="footerUploads">
                     Únicamente imágenes (PNG, JPG y JPEG)<br />
-                    Máximo 10 imágenes
+                    Máximo 10 imágenes<br />
+                    Tamaño máximo por imágen 5MB
                   </MDBCardFooter>
                 </MDBCard>
                 <br />

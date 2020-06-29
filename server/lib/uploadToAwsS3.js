@@ -10,9 +10,12 @@ const s3 = new AWS.S3({ accessKeyId: process.env.AWS_KEY_ID, secretAccessKey: pr
  */
 const uploadFileToS3 = (file, filename, bucketS3 = 'forms-example', acl = 'public-read') => {
   let params = { Bucket: bucketS3, ACL: acl, Key: filename, Body: file }
-  s3.upload(params, function(err, data) {
-    console.log(err, data)
-  })  
+  return new Promise((resolve, reject) => {
+    return s3.upload(params, function(err, result) {
+      if (err) reject(err);
+      resolve(result);
+    })
+  })
 }
 
 module.exports =  uploadFileToS3

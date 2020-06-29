@@ -16,12 +16,46 @@
     .page {
       page-break-after: always;
     }
+    .rotate-90{
+      transform: rotate(90deg);
+    }
+
+    .rotate-180{
+      transform: rotate(180deg);
+    }
+
+    .rotate-270{
+      transform: rotate(270deg);
+    }
+
+    /* Position child elements relative to this element */
+    .aspect-ratio-box {
+      position: relative;
+    }
+
+    /* Create a pseudo element that uses padding-bottom to take up space */
+    .aspect-ratio-box::after {
+      display: block;
+      content: '';
+      /* 16:9 aspect ratio */
+      padding-bottom: 56.25%;
+    }
+
+    /* Image is positioned absolutely relative to the parent element */
+    .aspect-ratio-box img {
+      /* Image should match parent box size */
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 80%;
+      height: 100%;
+    }
   </style>
 </head>
 <body>
   <div class="page">
     <h5>Consulta Preanestesica</h5>
-      <div class="card w-75 m-3">
+      <div class="card w-50 m-3">
         <div class="card-header bg-transparent border-success">
           Datos del Paciente
         </div>
@@ -191,7 +225,7 @@
   </div>
   
   <div class="page">
-    <div class="card w-75 m-3">
+    <div class="card w-50 m-3">
 
       <div class="card-header bg-transparent border-success">
         Medicación Habitual
@@ -363,7 +397,7 @@
     </div>
     <br>    
     
-    <div class="card w-75 m-3">
+    <div class="card w-50 m-3">
       <div class="card-header bg-transparent border-success">
         Exámen Físico de la Boca
       </div>
@@ -394,9 +428,30 @@
     </div>    
   </div>
 
+  <% if (fileUrls) { %>
+
+    <% for (const file of fileUrls) { %>
+      <div class="page">
+        <div class="card w-50 m-3">
+          <div class="aspect-ratio-box">
+            <img src="<%= file.url %>">
+          </div>
+        </div>
+      </div>
+    <% } %>
+
+  <% } %>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script>
+    let images = document.querySelectorAll('img');
+    for (const img of images){
+      if (img.naturalWidth > img.naturalHeight){
+        img.classList = 'rotate-90';
+      }
+    }
+  </script>
 </body>
 </html>
 

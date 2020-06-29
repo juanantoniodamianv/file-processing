@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.678.0",
+    "axios": "^0.19.2",
     "bull": "^3.11.0",
     "chalk": "^2.4.2",
     "compression": "^1.0.3",
@@ -28,6 +29,7 @@
     "loopback-component-explorer": "^6.2.0",
     "loopback-component-storage": "^3.6.3",
     "loopback-connector-mongodb": "^4.0.0",
+    "moment": "^2.27.0",
     "multiparty": "^4.2.1",
     "redis": "^2.8.0",
     "serve-favicon": "^2.0.1",

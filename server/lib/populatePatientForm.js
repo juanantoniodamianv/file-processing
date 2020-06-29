@@ -1,10 +1,13 @@
 'use strict'
 const { GoogleSpreadsheet } = require('google-spreadsheet');
+const moment = require('moment');
 const patient = process.env.SPREADSHEET_DOC_ID_PATIENT;
+const doctor = process.env.SPREADSHEET_DOC_ID_DOCTOR;
 
 module.exports = async (PatientForm) => {
 
   let document = new GoogleSpreadsheet(patient)
+  let doctorDocument = new GoogleSpreadsheet(doctor)
   
   await document.useServiceAccountAuth({
     client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -13,10 +16,19 @@ module.exports = async (PatientForm) => {
 
   await document.loadInfo()
 
+  await doctorDocument.useServiceAccountAuth({
+    client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+    private_key: process.env.GOOGLE_PRIVATE_KEY,
+  })
+
+  await doctorDocument.loadInfo()
+
   /* Get the first sheet */
   let sheet = document.sheetsByIndex[0]
+  let doctorSheet = doctorDocument.sheetsByIndex[0]
   /* Get rows of the sheet */
   let rows = await sheet.getRows()
+  let doctorRows = await doctorSheet.getRows()
 
   //TODO verificar esto...
   for (const row of rows) {
@@ -66,57 +78,139 @@ module.exports = async (PatientForm) => {
     let protesisDental = row["¿Utiliza prótesis dental?"]
     let limitacionParaMoverElCuello = row["¿Alguna limitación para mover el cuello?"]
 
-    await PatientForm.findOrCreate({ where: { 
-      and: [
-        { fechaDeConsulta: fechaDeConsulta },
-        { numeroDeDocumento: numeroDeDocumento },
-        { cuitMedicoAnestesista: cuitMedicoAnestesista }
-      ]}
-    }, {
-      marcaTemporal,
-      fechaDeConsulta,
-      apellidoYNombre,
-      numeroDeDocumento,
-      obraSocial,
-      numeroAfiliado,
-      numeroAfiliado,
-      edad,
-      peso,
-      medicoDeCabecera,
-      medicoAnestesista,
-      cuitMedicoAnestesista,
-      cirugiaOProcedimientoARealizar,
-      cirugiasAnteriores,
-      antecedentesDeAlgunaEnfermedad,
-      arritmias,
-      asma,
-      diabetes,
-      epoc,
-      escoliosis,
-      fuma,
-      hipertiroidismo,
-      hipotiroidismo,
-      presionArterial,
-      cuandoDejoDeFumar,
-      problemasRenales,
-      otrasEnfermedades,
-      medicacionHabitual,
-      aas,
-      sintrom,
-      clexane,
-      alergiaAMedicamentos,
-      amoxicilina,
-      cefaexina,
-      diclofenac,
-      dipirona,
-      ibuprofeno,
-      pescado,
-      huevo,
-      alergiaAOtroAlimento,
-      aperturaBucalNormal,
-      protesisDental,
-      limitacionParaMoverElCuello
-    });
+    let date = moment().subtract(1, 'days').format("DD-MM-YYYY");
+    if (date != fechaDeConsulta) {
+      // Ej. Fecha de hoy: 29-06-2020
+      // Se procesan unicamente las de fecha 28-06-2020
+      continue;
+    }
+
+    let doctorRow = existRowInDoctorSpreadsheet(numeroDeDocumento, doctorRows)
+
+    if (doctorRow) {
+      let [asa, observaciones, alerta] = doctorRow
+
+      let patient = await PatientForm.findOne({ where: { 
+        and: [
+          { numeroDeDocumento: numeroDeDocumento }
+        ]}
+      });
+
+      if (patient) {
+        await patient.updateAttributes({
+          marcaTemporal,
+          fechaDeConsulta,
+          apellidoYNombre,
+          obraSocial,
+          numeroAfiliado,
+          numeroAfiliado,
+          edad,
+          peso,
+          medicoDeCabecera,
+          medicoAnestesista,
+          cuitMedicoAnestesista,
+          cirugiaOProcedimientoARealizar,
+          cirugiasAnteriores,
+          antecedentesDeAlgunaEnfermedad,
+          arritmias,
+          asma,
+          diabetes,
+          epoc,
+          escoliosis,
+          fuma,
+          hipertiroidismo,
+          hipotiroidismo,
+          presionArterial,
+          cuandoDejoDeFumar,
+          problemasRenales,
+          otrasEnfermedades,
+          medicacionHabitual,
+          aas,
+          sintrom,
+          clexane,
+          alergiaAMedicamentos,
+          amoxicilina,
+          cefaexina,
+          diclofenac,
+          dipirona,
+          ibuprofeno,
+          pescado,
+          huevo,
+          alergiaAOtroAlimento,
+          aperturaBucalNormal,
+          protesisDental,
+          limitacionParaMoverElCuello,
+          asa,
+          observaciones,
+          alerta
+        });
+      } else {
+        await PatientForm.create({
+          marcaTemporal,
+          fechaDeConsulta,
+          apellidoYNombre,
+          numeroDeDocumento,
+          obraSocial,
+          numeroAfiliado,
+          numeroAfiliado,
+          edad,
+          peso,
+          medicoDeCabecera,
+          medicoAnestesista,
+          cuitMedicoAnestesista,
+          cirugiaOProcedimientoARealizar,
+          cirugiasAnteriores,
+          antecedentesDeAlgunaEnfermedad,
+          arritmias,
+          asma,
+          diabetes,
+          epoc,
+          escoliosis,
+          fuma,
+          hipertiroidismo,
+          hipotiroidismo,
+          presionArterial,
+          cuandoDejoDeFumar,
+          problemasRenales,
+          otrasEnfermedades,
+          medicacionHabitual,
+          aas,
+          sintrom,
+          clexane,
+          alergiaAMedicamentos,
+          amoxicilina,
+          cefaexina,
+          diclofenac,
+          dipirona,
+          ibuprofeno,
+          pescado,
+          huevo,
+          alergiaAOtroAlimento,
+          aperturaBucalNormal,
+          protesisDental,
+          limitacionParaMoverElCuello,
+          asa,
+          observaciones,
+          alerta
+        });
+      }
+
+    }
 
   }
+
+  function existRowInDoctorSpreadsheet(numeroDeDocumento, doctorRows) {
+    for (const row of doctorRows) {
+      if (row["Número de documento"] == numeroDeDocumento) {
+        return [
+          row["ASA"],
+          row["Observaciones"],
+          row["Alerta"]
+        ]
+      }
+    }
+    return false;
+  }
+
+  return true;
 }

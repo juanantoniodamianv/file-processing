@@ -36,7 +36,9 @@ class ImagesModal extends Component {
               return (
                 <MDBRow className="mb-4">
                   <MDBCol md="12">
-                    <img src={file.url} className="img-fluid" alt="" />
+                    <div class="aspect-ratio-box">
+                      <img src={file.url} className="img-fluid" alt="" />
+                    </div>
                   </MDBCol>
                 </MDBRow>
               )
