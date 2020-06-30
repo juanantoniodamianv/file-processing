@@ -10,7 +10,8 @@ module.exports = async (PatientForm) => {
 
   const files = patients.map(async (patient) => {
     let filename = `DNI_${patient.numeroDeDocumento}_${patient.fechaDeConsulta.split('-').join('')}.pdf`;
-    let fileUrls = await FileUpload.getFiles(patient.numeroDeDocumento);
+    //let fileUrls = await FileUpload.getFiles(patient.numeroDeDocumento);
+    let fileUrls = null;
     let file = await generatePdf(patient, 'pdf-patient-v1', filename, fileUrls);
     return file;
   })
