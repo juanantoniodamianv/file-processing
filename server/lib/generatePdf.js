@@ -13,8 +13,8 @@ module.exports = async (data, ejsFile, filename = `${Date.now()}.pdf`, fileUrls 
     pdf.create(html, {
       type: 'pdf',
       format: 'A4',
-      orientation: 'portrait'
-
+      orientation: 'portrait',
+      timeout: '100000'
     }).toBuffer(async (err, buffer) => {
       if (err) return reject(err)
       let { Location, Key } = await uploadFileToS3(buffer, filename)
