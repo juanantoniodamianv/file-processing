@@ -52,7 +52,7 @@ module.exports = function(app) {
     
 ----------------------------------------------------------------------------------------*/
 
-/*   const PatientForm = app.models.PatientForm;
+  const PatientForm = app.models.PatientForm;
 
   fileProcessor.process(async (job, done) => {
     console.log(chalk.cyan(`\n[Bull] Launched: ${Date(Date.now()).toString()}`));
@@ -66,17 +66,17 @@ module.exports = function(app) {
     done();
   });
 
-  fileProcessor.add({ foo: 'bar' },{
+  fileProcessor.add({},{
     repeat: {
-      repeat: {cron: '00 2 * * *'}
+      cron: '35 10 * * *'
     }
-  }); */
+  }); 
   
 
   /* Generar PDF segun el modelo PatientForm */
-/*   fileProcessorPdfFiles.process(async (job, done) => {
+  fileProcessorPdfFiles.process(async (job, done) => {
     console.log(chalk.cyan(`\n[Bull] Launched: ${Date(Date.now()).toString()}`));
-    console.log(chalk.cyan('[Bull] Generating pdf files'));
+    console.log(chalk.cyan('[Bull] Generatg pdf files'));
     try {
       generatePatientPdf(PatientForm);
     } catch(err) {
@@ -88,7 +88,7 @@ module.exports = function(app) {
 
   fileProcessorPdfFiles.add({ foo: 'bar' },{
     repeat: {
-      repeat: {cron: '15 2 * * *'} 
+      cron: '45 10 * * *'
     }
-  }); */
+  });
 }

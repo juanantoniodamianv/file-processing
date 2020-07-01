@@ -120,7 +120,7 @@ module.exports = function(Fileupload) {
     http: { path: '/get-files', verb: 'get' }
   });
 
-  Fileupload.getPatientFiles = async () => {
+/*   Fileupload.getPatientFiles = async () => {
 
     const PatientForm = Fileupload.app.models.PatientForm;
 
@@ -135,11 +135,39 @@ module.exports = function(Fileupload) {
   }
 
   Fileupload.remoteMethod('getPatientFiles', {
-    /* accepts: [
-      { arg: 'date', type: 'string', required: true, http: { source: 'query' } }
-    ], */
     returns: { root: true, type: 'array' },
     http: { path: '/get-patient-files', verb: 'get' }
+  }); */
+
+  Fileupload.getPatientFileUrls = async () => {
+    /* Get yesterday date */
+    let date = moment().subtract(1, 'days').format("DDMMYYYY");
+
+    let params = {
+      Bucket: "forms-example", 
+      MaxKeys: 1000
+    };
+
+    return new Promise((resolve, reject) => {
+      return s3.listObjectsV2(params, (err, data) => {
+        if (err) console.log(err, err.stack);
+        let files = [];
+        for (const file of data.Contents) {
+          let fileKey = file.Key;
+          let fkSplited = fileKey.split('_');
+          fkSplited = fkSplited[fkSplited.length -1].split('.')[0];
+          if (fkSplited == date) {
+            files.push({'url': awsS3UrlDefault + file.Key, 'name': file.Key}); 
+          }
+        }
+        return resolve(files);
+      })
+    })
+  }
+
+  Fileupload.remoteMethod('getPatientFileUrls', {
+    returns: { root: true, type: 'array' },
+    http: { path: '/get-patient-file-urls', verb: 'get' }
   });
 
 };
