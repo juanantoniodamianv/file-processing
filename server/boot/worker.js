@@ -68,7 +68,7 @@ module.exports = function(app) {
 
   fileProcessor.add({},{
     repeat: {
-      cron: '00 14 * * *'
+      cron: '35 14 * * *'
     }
   }); 
   
@@ -88,7 +88,7 @@ module.exports = function(app) {
 
   fileProcessorPdfFiles.add({ foo: 'bar' },{
     repeat: {
-      cron: '10 14 * * *'
+      cron: '45 14 * * *'
     }
   });
 }
