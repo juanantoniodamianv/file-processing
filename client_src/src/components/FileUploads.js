@@ -199,6 +199,7 @@ class FileUploads extends Component{
                       <label className="inputFileLabel">
 			                  <input type="file" name="file" onChange={this.onChangeHandler} multiple />Cargar estudios
                       </label>
+                      <p><h6>Por favor, recuerde subir imágenes nítidas y de fácil lectura.</h6></p>
 		                  <ul id="filesList">
                         {selectedFile &&  Array.from(selectedFile).map(file => {
                           return <FileElement fileName={file.name} onClick={this.deleteFile.bind(this, file.name)}/>
