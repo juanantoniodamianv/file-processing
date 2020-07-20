@@ -133,6 +133,51 @@
           Clínica Preoperatorio
         </div>
         <div class="card-body">
+
+          <label>Indique si ha tenido en las últimas semanas:</label>
+          <div class="form-row">
+            <div class="form-group col-6">
+              <label></label>
+            </div>
+            <div class="form-group col-1">
+              <label>Si</label>
+            </div>
+            <div class="form-group col-1">
+              <label>No</label>
+            </div>
+          </div>
+
+          <%
+          let objs_4= [
+            {item: 'Tos, catarro, congestion o fiebre', val: data.tosCatarroCongestionOFiebre},
+          ];
+          %>
+
+          <% for (const v of objs_4) {%>
+    
+            <div class="form-row">
+              <div class="form-group col-6">
+                <label><%= v.item %></label>
+              </div>
+              <% if (v.val) {%>
+              <div class="form-group col-1">
+                <input class="form-control" checked type="checkbox">
+              </div>
+              <div class="form-group col-1">
+                <input class="form-control" type="checkbox">
+              </div>
+              <%} else {%>
+                <div class="form-group col-1">
+                  <input class="form-control" type="checkbox">
+                </div>
+                <div class="form-group col-1">
+                  <input class="form-control" checked type="checkbox">
+                </div>
+              <%}%>
+            </div>
+    
+          <% } %>
+
           <div class="form-row">
             <div class="form-group col-12">
               <label>Cirugías anteriores:</label>

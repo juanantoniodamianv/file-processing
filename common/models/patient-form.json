@@ -59,6 +59,10 @@
       "type": "string",
       "default": ""
     },
+    "tosCatarroCongestionOFiebre": {
+      "type": "boolean",
+      "default": false
+    },
     "cirugiasAnteriores": {
       "type": "string",
       "default": ""

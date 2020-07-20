@@ -47,6 +47,7 @@ module.exports = async (PatientForm) => {
     medicoAnestesista.pop();
     medicoAnestesista = medicoAnestesista.join(' ');
     let cirugiaOProcedimientoARealizar = row["Cirugía o procedimiento a realizar"]
+    let tosCatarroCongestionOFiebre = row["[Tos, catarro, congestion o fiebre]"] === 'Si'
     let cirugiasAnteriores = row["Cirugias anteriores"]
     let antecedentesDeAlgunaEnfermedad = row["Antecedentes de alguna enfermedad"]
     let arritmias = row["[Arritmias]"] === 'Si'
@@ -110,6 +111,7 @@ module.exports = async (PatientForm) => {
           medicoAnestesista,
           cuitMedicoAnestesista,
           cirugiaOProcedimientoARealizar,
+          tosCatarroCongestionOFiebre,
           cirugiasAnteriores,
           antecedentesDeAlgunaEnfermedad,
           arritmias,
@@ -159,6 +161,7 @@ module.exports = async (PatientForm) => {
           medicoAnestesista,
           cuitMedicoAnestesista,
           cirugiaOProcedimientoARealizar,
+          tosCatarroCongestionOFiebre,
           cirugiasAnteriores,
           antecedentesDeAlgunaEnfermedad,
           arritmias,
