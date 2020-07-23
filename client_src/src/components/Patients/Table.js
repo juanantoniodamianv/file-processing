@@ -133,7 +133,7 @@ export class Table extends Component {
       return `<a href="${url}" class="btn btn-sm btn-primary btn-block mb-1" target="_blank">${title}</a>`;
     }
     let { fecha_de_consulta, apellido_y_nombre, numero_de_documento, medico_anestesista } = attr;
-
+    console.log(apellido_y_nombre)
     fecha_de_consulta = fecha_de_consulta.split('/').map(e => (e.length === 1) ? `0${e}` : e).reverse().join('-');
     apellido_y_nombre = apellido_y_nombre.replace(/ /g,"+");
     medico_anestesista = medico_anestesista.replace(/ /g,"+");

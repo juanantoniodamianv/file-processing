@@ -124,16 +124,16 @@ class FileUploads extends Component{
   maxFileSize = (event) => {
     let files = event.target.files;
     let err = '';
-    let maxSize = 5000000;
+    let maxSize = 2000000;
     for (let x = 0; x < files.length; x++) {
       if (files[x].size > maxSize) {
-        err += `${files[x].name} excede el tamaño permitido (5MB por archivo).`;
+        err += `${files[x].name} excede el tamaño permitido (2MB por archivo).`;
       }
     }
     if (err !== '') {
       event.target.value = null;
       console.log(err);
-      this.formatNotValidAlert("El tamaño maximo permitido es de 5MB por imágen.");
+      this.formatNotValidAlert("El tamaño maximo permitido es de 2MB por imágen.");
       return false;
     }
     return true;
@@ -210,7 +210,7 @@ class FileUploads extends Component{
                   <MDBCardFooter small muted id="footerUploads">
                     Únicamente imágenes (PNG, JPG y JPEG)<br />
                     Máximo 10 imágenes<br />
-                    Tamaño máximo por imágen 5MB
+                    Tamaño máximo por imágen 2MB
                   </MDBCardFooter>
                 </MDBCard>
                 <br />
