@@ -79,10 +79,16 @@ module.exports = async (PatientForm) => {
     let protesisDental = row["¿Utiliza prótesis dental?"]
     let limitacionParaMoverElCuello = row["¿Alguna limitación para mover el cuello?"]
 
-    let date = moment().subtract(1, 'days').format("DD-MM-YYYY");
-    if (date != fechaDeConsulta) {
-      // Ej. Fecha de hoy: 29-06-2020
-      // Se procesan unicamente las de fecha 28-06-2020
+    let date = moment().subtract(1, 'days').format("DD-MM-YYYY");   // Yesterday
+    let date_1 = moment().subtract(2, 'days').format("DD-MM-YYYY"); // Yesterday - 1
+    let date_2 = moment().subtract(3, 'days').format("DD-MM-YYYY"); // Yesterday - 2
+    let date_3 = moment().subtract(4, 'days').format("DD-MM-YYYY"); // Yesterday - 3
+    let date_4 = moment().subtract(5, 'days').format("DD-MM-YYYY"); // Yesterday - 4
+
+
+    if (date != fechaDeConsulta && date_1 != fechaDeConsulta && date_2 != fechaDeConsulta && date_3 != fechaDeConsulta && date_4 != fechaDeConsulta) {
+      // Ej. Fecha de hoy: 22-07-2020
+      // Se procesan unicamente las de fecha 21-07-2020, 20, 19, 18, 17
       continue;
     }
 
@@ -93,17 +99,18 @@ module.exports = async (PatientForm) => {
 
       let patient = await PatientForm.findOne({ where: { 
         and: [
-          { numeroDeDocumento: numeroDeDocumento }
+          { numeroDeDocumento: numeroDeDocumento },
+          { pdfHasCreated: false }
         ]}
       });
 
       if (patient) {
+        console.log(`Update patient: ${apellidoYNombre} - ${numeroDeDocumento}`)
         await patient.updateAttributes({
           marcaTemporal,
           fechaDeConsulta,
           apellidoYNombre,
           obraSocial,
-          numeroAfiliado,
           numeroAfiliado,
           edad,
           peso,
@@ -147,13 +154,13 @@ module.exports = async (PatientForm) => {
           alerta
         });
       } else {
+        console.log(`Create patient: ${apellidoYNombre} - ${numeroDeDocumento}`)
         await PatientForm.create({
           marcaTemporal,
           fechaDeConsulta,
           apellidoYNombre,
           numeroDeDocumento,
           obraSocial,
-          numeroAfiliado,
           numeroAfiliado,
           edad,
           peso,

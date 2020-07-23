@@ -139,9 +139,13 @@ module.exports = function(Fileupload) {
     http: { path: '/get-patient-files', verb: 'get' }
   }); */
 
+  /* 
+    This method provide patient file urls created or updated today
+  */
   Fileupload.getPatientFileUrls = async () => {
     /* Get yesterday date */
-    let date = moment().subtract(1, 'days').format("DDMMYYYY");
+    //let date = moment().subtract(1, 'days').format("DDMMYYYY");
+    let today = moment().format("YYYY-MM-DD");
 
     let params = {
       Bucket: "forms-example", 
@@ -153,12 +157,28 @@ module.exports = function(Fileupload) {
         if (err) console.log(err, err.stack);
         let files = [];
         for (const file of data.Contents) {
-          let fileKey = file.Key;
-          let fkSplited = fileKey.split('_');
-          fkSplited = fkSplited[fkSplited.length -1].split('.')[0];
-          if (fkSplited == date) {
-            files.push({'url': awsS3UrlDefault + file.Key, 'name': file.Key}); 
+
+          let lastModified = file.LastModified.toISOString().split('T')[0];
+          if (lastModified == today && file.Key.search('image') === -1) {
+            files.push({
+              'url': awsS3UrlDefault + file.Key, 
+              'name': file.Key,
+              'lastModified': file.LastModified
+            }); 
           }
+
+          
+          //let fileKey = file.Key;               // "DNI_33867340_21072020.pdf"
+          //let fkSplited = fileKey.split('_');   // ["DNI", "33867340", "21072020.pdf"]
+          //fkSplited = fkSplited[fkSplited.length -1].split('.')[0]; // "21072020"
+          
+          /* if (fkSplited == date) {
+            files.push({
+              'url': awsS3UrlDefault + file.Key, 
+              'name': file.Key,
+              'lastModified': file.LastModified
+            }); 
+          } */
         }
         return resolve(files);
       })

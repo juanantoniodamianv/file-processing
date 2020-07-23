@@ -12,6 +12,7 @@ module.exports = async (data, ejsFile, filename = `${Date.now()}.pdf`, fileUrls 
 
     pdf.create(html, {
       type: 'pdf',
+      quality: '75',
       format: 'A4',
       orientation: 'portrait',
       timeout: '100000'

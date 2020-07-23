@@ -54,7 +54,7 @@ module.exports = function(app) {
 
   const PatientForm = app.models.PatientForm;
 
-  fileProcessor.process(async (job, done) => {
+/*   fileProcessor.process(async (job, done) => {
     console.log(chalk.cyan(`\n[Bull] Launched: ${Date(Date.now()).toString()}`));
     console.log(chalk.cyan('[Bull] Populating spreadsheets to mongodb'));
     try {
@@ -70,7 +70,7 @@ module.exports = function(app) {
     repeat: {
       cron: '30 3 * * *'
     }
-  }); 
+  });  */
   
 
   /* Generar PDF segun el modelo PatientForm */
@@ -87,8 +87,12 @@ module.exports = function(app) {
   });
 
   fileProcessorPdfFiles.add({ foo: 'bar' },{
-    repeat: {
+    /* repeat: {
       cron: '35 3 * * *'
+    } */
+    repeat: {
+      every: 10000,
+      limit: 1
     }
   });
 }
