@@ -5,11 +5,13 @@ import {  MDBContainer,
           MDBCard,
           MDBCardBody,
           MDBCardText,
-          MDBCardFooter } from "mdbreact";
+          MDBCardFooter,
+          MDBAlert } from "mdbreact";
 import axios from 'axios';
 import '../App.css';
 import FileElement from './Files/FileElement';
 import ModalPage from './utils/Modal';
+
 
 class FileUploads extends Component{
 
@@ -140,10 +142,10 @@ class FileUploads extends Component{
   }
 
   formatNotValidAlert = (msg) => {
-    let alert = document.querySelector(".mdbAlert")
+    let alert = document.querySelector(".formatNotValidAlert")
     alert.children[0].innerHTML = msg;
     alert.classList.remove('d-none');
-    setTimeout(() => { alert.classList.add('d-none') }, 4000);
+    setTimeout(() => { alert.classList.add('d-none') }, 8000);
   }
  
   render(){
@@ -200,6 +202,9 @@ class FileUploads extends Component{
 			                  <input type="file" name="file" onChange={this.onChangeHandler} multiple />Cargar estudios
                       </label>
                       <p><h6>Por favor, recuerde subir imágenes nítidas y de fácil lectura.</h6></p>
+                      <MDBAlert color="warning" className="d-none formatNotValidAlert">
+                        <span>Alert</span>
+                      </MDBAlert>
 		                  <ul id="filesList">
                         {selectedFile &&  Array.from(selectedFile).map(file => {
                           return <FileElement fileName={file.name} onClick={this.deleteFile.bind(this, file.name)}/>

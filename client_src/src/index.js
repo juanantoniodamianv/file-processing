@@ -7,6 +7,13 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import 'bootstrap-css-only/css/bootstrap.min.css';
 import 'mdbreact/dist/css/mdb.css';
 import * as serviceWorker from './serviceWorker';
+import axios from 'axios';
+
+if (process.env.NODE_ENV === 'production') {
+  axios.defaults.baseURL = '/';
+} else {
+  axios.defaults.baseURL = 'http://localhost:3000';
+}
 
 ReactDOM.render(
   <BrowserRouter>

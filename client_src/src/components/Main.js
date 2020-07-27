@@ -6,7 +6,7 @@ import { MDBAlert } from "mdbreact";
 
 const Main = () => (
   <main>
-    <MDBAlert color="warning" className="mb-3 d-none mdbAlert">
+    <MDBAlert color="warning" className="d-none mdbAlert">
       <span>Alert</span>
     </MDBAlert>
     <Switch>
