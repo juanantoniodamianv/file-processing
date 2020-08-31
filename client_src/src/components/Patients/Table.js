@@ -129,6 +129,9 @@ export class Table extends Component {
   }
 
   linkActions = (url, title, attr = null) => {
+    if (!url && !attr) {
+      return `<a href="#" class="btn btn-sm btn-primary btn-block mb-1 disabled" target="_blank">${title}</a>`;
+    }
     if (url) {
       return `<a href="${url}" class="btn btn-sm btn-primary btn-block mb-1" target="_blank">${title}</a>`;
     }

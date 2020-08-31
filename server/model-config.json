@@ -45,40 +45,6 @@
     "dataSource": "mongodb",
     "public": false
   },
-  "Metric": {
-    "dataSource": "mongodb",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "find": true,
-          "getFiles": true,
-          "spreadsheets": true
-        }
-      }
-    }
-  },
-  "Segment": {
-    "dataSource": "mongodb",
-    "public": false
-  },
-  "Unique": {
-    "dataSource": "mongodb",
-    "public": false
-  },
-  "Customer": {
-    "dataSource": "mongodb",
-    "public": true,
-    "options": {
-      "remoting": {
-        "sharedMethods": {
-          "*": false,
-          "find": true
-        }
-      }
-    }
-  },
   "Storage": {
     "dataSource": "storage",
     "public": true,

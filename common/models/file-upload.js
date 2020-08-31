@@ -7,9 +7,6 @@ const s3 = new AWS.S3({ accessKeyId: process.env.AWS_KEY_ID, secretAccessKey: pr
 const awsS3UrlDefault = "https://forms-example.s3.us-east-2.amazonaws.com/";
 const moment = require('moment');
 
-const populatePatientForm = require('../../server/lib/populatePatientForm');
-const generatePatientPdf = require('../../server/lib/generatePatientPdf');
-
 module.exports = function(Fileupload) {
   /**
   * Helper method which takes the request object and returns a promise with a file.
@@ -120,25 +117,6 @@ module.exports = function(Fileupload) {
     http: { path: '/get-files', verb: 'get' }
   });
 
-/*   Fileupload.getPatientFiles = async () => {
-
-    const PatientForm = Fileupload.app.models.PatientForm;
-
-    return new Promise((resolve, reject) => {
-      return populatePatientForm(PatientForm).then(() => {
-        generatePatientPdf(PatientForm).then(files => {
-          console.log(files)
-          resolve(files);
-        })
-      })
-    })
-  }
-
-  Fileupload.remoteMethod('getPatientFiles', {
-    returns: { root: true, type: 'array' },
-    http: { path: '/get-patient-files', verb: 'get' }
-  }); */
-
   /* 
     This method provide patient file urls created or updated today
   */
@@ -166,19 +144,7 @@ module.exports = function(Fileupload) {
               'lastModified': file.LastModified
             }); 
           }
-
           
-          //let fileKey = file.Key;               // "DNI_33867340_21072020.pdf"
-          //let fkSplited = fileKey.split('_');   // ["DNI", "33867340", "21072020.pdf"]
-          //fkSplited = fkSplited[fkSplited.length -1].split('.')[0]; // "21072020"
-          
-          /* if (fkSplited == date) {
-            files.push({
-              'url': awsS3UrlDefault + file.Key, 
-              'name': file.Key,
-              'lastModified': file.LastModified
-            }); 
-          } */
         }
         return resolve(files);
       })

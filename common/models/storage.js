@@ -1,9 +1,9 @@
 'use strict';
 
-const fileImporter = require('../../server/lib/fileImporter');
+//const fileImporter = require('../../server/lib/fileImporter');
 
 module.exports = function(Storage) {
-  Storage.afterRemote('upload', async (ctx, res) => {
+  /* Storage.afterRemote('upload', async (ctx, res) => {
     const file = res.result.files.file[0];
     let importedRows;
 
@@ -14,5 +14,5 @@ module.exports = function(Storage) {
     }
 
     ctx.result.importedRows = importedRows;
-  });
+  }); */
 };
