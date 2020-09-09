@@ -1,5 +1,6 @@
 'use strict'
 const { GoogleSpreadsheet } = require('google-spreadsheet');
+const moment = require('moment');
 const patient = process.env.SPREADSHEET_DOC_ID_PATIENT;
 const doctor = process.env.SPREADSHEET_DOC_ID_DOCTOR;
 
@@ -14,13 +15,8 @@ const columns = [
   'Form Response Edit URL',
   'Form Response Edit URL M'
 ]
-
-const generatePdf = require('../lib/generatePdf');
-
  
 module.exports = async () => {
-
-  //await generatePdf()
 
   function parseColumnName(columnName){
     columnName = columnName
@@ -40,6 +36,9 @@ module.exports = async () => {
 
     return columnName
   }
+
+  let eightDaysAgoFromToday = moment(new Date()).add(-8,'days');
+  eightDaysAgoFromToday = moment(eightDaysAgoFromToday);
 
   let concatArray = []
   for (const doc of [doctor, patient]) {
@@ -65,6 +64,14 @@ module.exports = async () => {
         let col = parseColumnName(column)
         register[col] = cell
       });
+
+      let actual = register[parseColumnName('Fecha de consulta')] 
+      if (typeof actual !== 'string') {
+        return
+      }
+      actual = actual.split('/').reverse().join('/')
+      actual = moment(actual)
+      if (!moment(actual).isAfter(eightDaysAgoFromToday, undefined, '[]')) return;
       registers.push(register)
     })
     
