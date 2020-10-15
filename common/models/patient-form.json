@@ -71,6 +71,10 @@
       "type": "string",
       "default": ""
     },
+    "antecedentesDeEnfermedadadesHereditarias": {
+      "type": "string",
+      "default": ""
+    },
     "arritmias": {
       "type": "boolean",
       "default": false

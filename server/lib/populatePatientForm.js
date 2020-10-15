@@ -50,6 +50,7 @@ module.exports = async (PatientForm) => {
     let tosCatarroCongestionOFiebre = row["Indique si ha tenido en las últimas semanas: [Tos, catarro, congestion o fiebre]"] === 'Si'
     let cirugiasAnteriores = row["Cirugias anteriores"]
     let antecedentesDeAlgunaEnfermedad = row["Antecedentes de alguna enfermedad"]
+    let antecedentesDeEnfermedadadesHereditarias = row["Antecedentes de enfermedades hereditarias en la familia"]
     let arritmias = row["[Arritmias]"] === 'Si'
     let asma = row["[Asma]"] === 'Si'
     let diabetes = row["[Diabetes]"] === 'Si'
@@ -121,6 +122,7 @@ module.exports = async (PatientForm) => {
           tosCatarroCongestionOFiebre,
           cirugiasAnteriores,
           antecedentesDeAlgunaEnfermedad,
+          antecedentesDeEnfermedadadesHereditarias,
           arritmias,
           asma,
           diabetes,
@@ -171,6 +173,7 @@ module.exports = async (PatientForm) => {
           tosCatarroCongestionOFiebre,
           cirugiasAnteriores,
           antecedentesDeAlgunaEnfermedad,
+          antecedentesDeEnfermedadadesHereditarias,
           arritmias,
           asma,
           diabetes,
