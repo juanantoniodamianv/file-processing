@@ -7,7 +7,18 @@ const columns = [
   'Número de documento',
   'Fecha de consulta',
   'Médico anestesista'
-]
+];
+
+function getLastRow(rows){
+  let i = 1;
+  const rowLen = rows.length;
+  lastRow = rows[rowLen - i];
+  while(!lastRow['Número de documento']){
+    i++;
+    lastRow = rows[rowLen - i];
+  }
+  return lastRow;
+}
 
 module.exports = async () => {
 
@@ -21,11 +32,11 @@ module.exports = async () => {
       .replace(/\(|\)/g, "")
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "");
-    
+
     if (columnName[0] === "["){
       columnName = columnName.replace("[","").replace("]","")
       return 'check_'.concat(columnName)
-    } 
+    }
 
     return columnName
   }
@@ -38,7 +49,7 @@ module.exports = async () => {
   await document.loadInfo();
   let sheet = document.sheetsByIndex[0];
   let rows = await sheet.getRows();
-  let lastRow = rows[rows.length - 1];
+  let lastRow = getLastRow(rows);
   let register = {};
 
   columns.forEach(column => {
@@ -52,7 +63,7 @@ module.exports = async () => {
   } catch(e) {
     console.log(e);
   }
-  
+
   return register;
 
 }
