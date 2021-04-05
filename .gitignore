@@ -63,5 +63,5 @@ typings/
 *.tsv
 *.csv
 
-client/precache-*
-client/static/*
+client/precache-*.js
+client/static
