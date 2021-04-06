@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {  MDBContainer, 
-          MDBCol, 
-          MDBRow, 
+import {  MDBContainer,
+          MDBCol,
+          MDBRow,
           MDBCard,
           MDBCardBody,
           MDBCardText,
@@ -22,8 +22,8 @@ class FileUploads extends Component{
       selectedFile: null,
       isLoaded: null,
       fullName: null,
-      documentNumber: null, 
-      doctor: null, 
+      documentNumber: null,
+      doctor: null,
       date: null,
       submitResponse: null
     }
@@ -39,8 +39,8 @@ class FileUploads extends Component{
     this.setState({
       isLoaded: true,
       fullName: lastRecord.data.response.apellido_y_nombre,
-      documentNumber: lastRecord.data.response.numero_de_documento, 
-      doctor: lastRecord.data.response.medico_anestesista, 
+      documentNumber: lastRecord.data.response.numero_de_documento,
+      doctor: lastRecord.data.response.medico_anestesista,
       date: lastRecord.data.response.fecha_de_consulta.replace(/\//g,'-')
     });
   }
@@ -74,13 +74,13 @@ class FileUploads extends Component{
     let submitButton = document.getElementById("submitButton");
     submitButton.disabled = true;
     submitButton.innerHTML = `Cargando imágenes <div class="spinner-border spinner-border-sm" role="status"><span class="sr-only">Loading...</span></div>`;
-    
+
     const data = new FormData();
 
     for (var x = 0; x < this.state.selectedFile.length; x++) {
       data.append('file', this.state.selectedFile[x]);
     }
-    
+
     let response = await axios.post(`api/FileUploads/file-upload?fullName=${this.state.fullName}&documentNumber=${this.state.documentNumber}&doctor=${this.state.doctor}&date=${this.state.date}`, data, {});
     if (response.status === 200) {
       this.setState({
@@ -147,7 +147,7 @@ class FileUploads extends Component{
     alert.classList.remove('d-none');
     setTimeout(() => { alert.classList.add('d-none') }, 8000);
   }
- 
+
   render(){
     let { error, isLoaded, submitResponse, selectedFile } = this.state;
     if (error) {
@@ -172,7 +172,7 @@ class FileUploads extends Component{
           <MDBRow>
             <MDBCol md="6">
               <form method="post" action="#">
-                <p className="h4 text-center mt-4">Adjuntar Estudios En Ficha Pacientes </p>
+                <p className="h4 text-center mt-4">Adjuntar Estudios En Ficha pacientes </p>
                 <p className="h6 text-center mb-4">Aqui debe adjuntar los estudios de su último laboratorio (que contenga hemograma y coagulograma) y electrocardiograma completo con valoración.</p>
                 <label htmlFor="defaultFormRegister1" className="grey-text">
                   Apellido y nombre
@@ -219,8 +219,8 @@ class FileUploads extends Component{
                   </MDBCardFooter>
                 </MDBCard>
                 <br />
-                
-                <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler} id="submitButton">Subir estudios</button> 
+
+                <button type="button" className="btn btn-success btn-block" onClick={this.onClickHandler} id="submitButton">Subir estudios</button>
               </form>
             </MDBCol>
           </MDBRow>
