@@ -172,7 +172,7 @@ class FileUploads extends Component{
           <MDBRow>
             <MDBCol md="6">
               <form method="post" action="#">
-                <p className="h4 text-center mt-4">Adjuntar Estudios En Ficha pacientes </p>
+                <p className="h4 text-center mt-4">Adjuntar Estudios En Ficha Pacientes </p>
                 <p className="h6 text-center mb-4">Aqui debe adjuntar los estudios de su último laboratorio (que contenga hemograma y coagulograma) y electrocardiograma completo con valoración.</p>
                 <label htmlFor="defaultFormRegister1" className="grey-text">
                   Apellido y nombre
