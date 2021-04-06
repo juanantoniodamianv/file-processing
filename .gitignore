@@ -63,4 +63,5 @@ typings/
 *.tsv
 *.csv
 
-client/
+client
+client_src/build
