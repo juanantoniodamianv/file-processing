@@ -12,7 +12,7 @@ const columns = [
 function getLastRow(rows){
   let i = 1;
   const rowLen = rows.length;
-  lastRow = rows[rowLen - i];
+  let lastRow = rows[rowLen - i];
   while(!lastRow['Número de documento']){
     i++;
     lastRow = rows[rowLen - i];
