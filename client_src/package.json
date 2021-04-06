@@ -21,6 +21,7 @@
   "scripts": {
     "start": "PORT=3001 && react-scripts start",
     "build": "react-scripts build && cp -r build/* ../client/",
+    "build-win": "react-scripts build && xcopy build ..\\client /E/Y",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
